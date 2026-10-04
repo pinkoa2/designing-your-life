@@ -1,0 +1,29 @@
+name: Keep Supabase awake
+
+# Free Supabase projects pause after about a week without activity. This makes
+# a small real query every three days so the database stays awake.
+on:
+  schedule:
+    - cron: "17 14 */3 * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read one dashboard
+        env:
+          # Public by design (it's also in the site's code); the database rules protect the data.
+          SUPABASE_URL: https://swulxuvvhociubtwstkx.supabase.co
+          SUPABASE_KEY: sb_publishable_Di8KK5pCUZEZP-GhTbii-w_2K9IsplB
+          EXAMPLE_ID: fe99ee76-ef26-40e6-a375-c0295a4f213e
+        run: |
+          status=$(curl -s -o response.json -w "%{http_code}" -X POST \
+            "$SUPABASE_URL/rest/v1/rpc/get_dashboard" \
+            -H "apikey: $SUPABASE_KEY" \
+            -H "Content-Type: application/json" \
+            -d "{\"p_user\":\"$EXAMPLE_ID\"}")
+          echo "Supabase answered HTTP $status"
+          test "$status" = "200"
