@@ -1,6 +1,6 @@
-// Content for the "Start Where You Are" check-in.
-// This is the only file that changes when answers change: scores are 0–100,
-// notes are a few sentences.
+// Default content for the "Start Where You Are" check-in: what a dashboard shows
+// before anyone has edited it. Real answers are saved per person by
+// #lib/storage.ts. The owner's original answers are kept in /answers.json.
 
 export type AreaId = "health" | "work" | "play" | "love";
 
@@ -9,6 +9,8 @@ export interface Area {
   name: string;
   score: number;
   note: string;
+  /** What to write about, shown in place of the note until there is one. */
+  prompt: string;
 }
 
 export const checkin: { placeholder: boolean; areas: Area[] } = {
@@ -17,26 +19,30 @@ export const checkin: { placeholder: boolean; areas: Area[] } = {
     {
       id: "health",
       name: "Health",
-      score: 80,
-      note: "Physically I'm in good shape: the gym 3–4 times a week and a 4–5 mile run at least once a week. I'm not as strong or fast as I used to be, and I'd like to be a bit leaner, but training is a big part of my life and I enjoy it. My mental health is what keeps this from 100. It's okay, not great, and I'm working on it, partly through this book and fun projects like this site.",
+      score: 25,
+      note: "",
+      prompt: "How full does your health feel right now: body, mind and emotions? Set this tube with Edit gauges, then tap Write to say why. Think sleep, energy, stress, and how you feel day to day.",
     },
     {
       id: "work",
       name: "Work",
-      score: 20,
-      note: "My work right now is a 9–5 software engineering job that no longer fulfills me or brings me joy. It burns me out so much that I have little left for anything outside it. I'd love a more interesting job, or something on the side that brings in income. I think about it a lot: a new job, second income streams. But I feel trapped by my own inaction.",
+      score: 50,
+      note: "",
+      prompt: "Work is whatever you contribute to the world, paid or not. Set this tube to how engaged and fulfilled it feels, then tap Write to say why. What drains you, and what would you change?",
     },
     {
       id: "play",
       name: "Play",
-      score: 40,
-      note: "A lot of my free time goes to scrolling YouTube and Instagram, though I do enjoy sitting down with a video or a show. What I really love is reading every night: fantasy, classics, and I'd like to get into philosophy. Beyond that I don't have much fun. I enjoy peace and quiet, being outdoors, and traveling, but I rarely do them. Fun isn't a core value for me, and not having much of it doesn't make me unhappy. Hence the low score.",
+      score: 75,
+      note: "",
+      prompt: "Play is anything you do just for the joy of it, not to win or get somewhere. Set this tube to how much of that is in your life, then tap Write: what do you do for fun, and what do you miss?",
     },
     {
       id: "love",
       name: "Love",
-      score: 70,
-      note: "My girlfriend is the main reason this score is high. She's always there for me and makes my life sweeter, and I love hanging out with her doing literally anything. I'm close with my family too, and I feel love both given and received. Friendships are where I can do better: I rarely see a lot of my close friends, and I don't make enough effort in general. I get on well with my co-workers, and as an introvert who needs time alone, my social life genuinely feels like enough.",
+      score: 100,
+      note: "",
+      prompt: "Love is the people in your life: partner, family, friends. Set this tube to how connected you feel, then tap Write: who's filling it, and where would you like more?",
     },
   ],
 };

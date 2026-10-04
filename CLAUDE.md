@@ -1,12 +1,11 @@
 # Designing Your Life
 
-A personal website for one person, the owner, that **displays** their own answers to
-the exercises in _Designing Your Life_ (Bill Burnett & Dave Evans). A few people
-(partner, friends, a coach) may see it. It is public: anyone with the link, and the GitHub repo is public too.
+A small website where the owner and their girlfriend, Ting, each record and share their
+answers to the exercises in _Designing Your Life_ (Bill Burnett & Dave Evans). It is public: anyone with the link, and the GitHub repo is public too.
 
-Built so far: a landing/contents page at `/`, and the **"Start Where You Are"** check-in
-(Health / Work / Play / Love Dashboard) at `/start-where-you-are/`, with the owner's real
-answers. It is live at https://designing-your-life.pinkoa2.lol (GitHub Pages, deployed on
+Built so far: a landing/contents page at `/`, the **"Start Where You Are"** dashboard
+(Health / Work / Play / Love) at `/start-where-you-are/`, and `/sign-in/`. Each person
+keeps their own dashboard (see "How content works"). It is live at https://designing-your-life.pinkoa2.lol (GitHub Pages, deployed on
 every push to `main`). Nothing else is in scope until the owner asks.
 
 Read these before design work:
@@ -16,27 +15,30 @@ Read these before design work:
 - `.impeccable/surfaces/` holds each page's direction contract: the landing/contents
   page (`src-routes-page-svelte.md`) and the check-in (`src-routes-start-where-you-are-page-svelte.md`).
 
-## How content works
+## How content works (changed 2026-10-04)
 
-The owner never edits anything inside the site: no forms, no inputs, no save state.
-They talk their answers through in chat, and Claude writes them into a content file.
+The site is no longer display-only. Each person has an account and edits their own
+dashboard in the site. Answers live in **Supabase** (project `swulxuvvhociubtwstkx`,
+US East), not in content files.
 
-The workflow that worked:
-1. The owner gives a score and rambles about why.
-2. Claude drafts a tighter **first-person note in the owner's voice**, about 60–90
-   words. Keep every point they made and add nothing they didn't say.
-3. Show the draft and **wait for approval** before writing it in. Mention anything
-   left out, such as self-deprecating lines ("I'm kind of a boring person"), and offer
-   to put it back.
-4. Ask for specifics rather than inventing them. For example, when the owner wanted
-   more about their girlfriend, Claude asked prompting questions and used only what
-   they answered.
-5. When every answer is real, set `placeholder: false`. That hides the "Placeholder
-   scores" chip and the colophon line.
-
-Content for the check-in lives in `src/lib/content/start-where-you-are.ts`. The
-current answers are Health 80, Work 20, Play 40, Love 70, so Work carries the
-"Start here" sticker.
+- **Accounts:** invite-only. Sign-up is disabled in Supabase, and people are added in
+  Authentication → Users ("Create new user", auto-confirm). They sign in with an emailed
+  link (`/sign-in/`). There are currently two people: Alex (the owner) and Ting.
+- **Sharing:** every dashboard is public read-only by link, `?u=<user id>`, and the ID is
+  carried on every page link (`withPerson()` in `src/lib/viewing.svelte.ts`). Nothing lists
+  dashboards; the owner wants link-only, with no directory.
+- **Editing (owner only, signed in):** "Edit my gauges" edits all four tubes together (drag
+  the centered handle, or type the number). Each note has its own Edit / Write button and
+  edits in place. Both actions save straight to Supabase.
+- **Database:** `supabase/schema.sql` creates `profiles` and `answers` with RLS. Anonymous
+  visitors can only call `get_dashboard(uuid)` and have no table access; owners write only
+  their own rows. Display names live in `public.profiles.display_name`, set with SQL for
+  now.
+- `src/lib/content/start-where-you-are.ts` now holds only the defaults (25/50/75/100)
+  and the per-area writing prompts. The owner's original answers are kept in
+  `answers.json`.
+- Only the publishable key is in the repo (`src/lib/supabase.ts`). Never commit the
+  secret/service_role key or the database password.
 
 ## Stack and commands
 

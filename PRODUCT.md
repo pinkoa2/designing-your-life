@@ -28,10 +28,9 @@ The owner gives answers by talking them through in conversation with Claude. Cla
 
 ## Capabilities and Constraints
 
-- Display only. No forms, textareas, persistence, or "fill this in" UI. Earlier attempts were rejected for this.
+- Editing happens inline on the page itself: drag a tube, type a number, and edit a note in place. There are no separate form screens; an early form-app attempt was rejected. Each person edits only their own dashboard (decided 2026-10-04, when the site became shared).
 - The four areas are always Health, Work, Play, and Love, in the book's terms.
 - Each area has a percentage score (0–100) and a short note, a few sentences long.
-- Current content is placeholder: random scores and Latin notes until the owner provides real answers.
 - The brief is "clean but fun". Two earlier visual attempts were rejected: a form app, and a cream/serif editorial card layout.
 
 ## Evidence on Hand

@@ -2,13 +2,13 @@
 
 **Live site: [designing-your-life.pinkoa2.lol](https://designing-your-life.pinkoa2.lol)**
 
-My answers to the exercises in
+Our answers to the exercises in
 **_Designing Your Life: How to Build a Well-Lived, Joyful Life_** by
 **Bill Burnett & Dave Evans** (2016), presented as a small personal website.
 
 So far it has the first exercise, **Start Where You Are**: a check-in on Health,
 Work, Play, and Love. Each area is a test tube filled to its score, with a short
-note on why I gave it that score.
+note on why each of us gave it that score.
 
 ## Local development
 
@@ -22,11 +22,12 @@ npm run check          # type-check
 Built with SvelteKit 3 and Svelte 5, prerendered to static HTML with
 `@sveltejs/adapter-static`.
 
-## Updating content
+## Accounts and answers
 
-The answers live in `src/lib/content/start-where-you-are.ts`, which holds a score
-(0–100) and a note for each area. The page has no editing UI; changes are made in
-that file.
+Each person signs in with an emailed link (invite-only) and edits their own dashboard
+on the page. Anyone with a person's share link can view their answers read-only.
+Answers are stored in [Supabase](https://supabase.com); `supabase/schema.sql` sets up
+the tables and access rules.
 
 ## Deployment
 

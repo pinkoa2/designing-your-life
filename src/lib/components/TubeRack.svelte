@@ -1,15 +1,67 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import TestTube, { BOTTOM } from "./TestTube.svelte";
-  import type { Area } from "#lib/content/start-where-you-are.ts";
+  import TestTube, { BOTTOM, BRIM, levelY } from "./TestTube.svelte";
+  import type { Area, AreaId } from "#lib/content/start-where-you-are.ts";
 
-  let { areas, lowest }: { areas: Area[]; lowest: number } = $props();
+  let {
+    areas,
+    lowest,
+    editing = false,
+    pending = false,
+    onscore,
+  }: {
+    areas: Area[];
+    lowest: number;
+    editing?: boolean;
+    /** The answers haven't arrived yet: show dashes instead of numbers. */
+    pending?: boolean;
+    onscore?: (id: AreaId, score: number) => void;
+  } = $props();
 
   let rack: HTMLOListElement;
 
-  // Signature motion: each tube drops into its hole in the rack, then fills
-  // to its level. The page renders in its final state; the animation only
-  // plays from a starting pose, so nothing is ever hidden.
+  const clamp = (n: number) => Math.max(0, Math.min(100, Math.round(n)));
+
+  // In edit mode a tube is a slider: drag the liquid to a level, or use the keys.
+  function setFromPointer(event: PointerEvent, id: AreaId) {
+    const box = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    const y = ((event.clientY - box.top) / box.height) * 220;
+    onscore?.(id, clamp(((BOTTOM - y) / (BOTTOM - BRIM)) * 100));
+  }
+
+  function pointerDown(event: PointerEvent, id: AreaId) {
+    if (!editing) return;
+    (event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
+    setFromPointer(event, id);
+  }
+
+  function pointerMove(event: PointerEvent, id: AreaId) {
+    if (!editing) return;
+    if (!(event.currentTarget as HTMLElement).hasPointerCapture(event.pointerId)) return;
+    setFromPointer(event, id);
+  }
+
+  function keyDown(event: KeyboardEvent, area: Area) {
+    if (!editing) return;
+    const step = event.shiftKey ? 5 : 1;
+    const next: Record<string, number> = {
+      ArrowUp: area.score + step,
+      ArrowRight: area.score + step,
+      ArrowDown: area.score - step,
+      ArrowLeft: area.score - step,
+      PageUp: area.score + 10,
+      PageDown: area.score - 10,
+      Home: 0,
+      End: 100,
+    };
+    if (!(event.key in next)) return;
+    event.preventDefault();
+    onscore?.(area.id, clamp(next[event.key]));
+  }
+
+  // Signature motion: each tube drops into its hole in the rack. The levels
+  // fill by themselves: the rack starts empty and the liquid eases up to each
+  // score once the answers arrive (see the .liquid transition below).
   onMount(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -17,12 +69,6 @@
       slot.querySelector(".glass")?.animate(
         [{ transform: "translateY(-48px)" }, { transform: "none" }],
         { duration: 700, delay: 150 + n * 110, easing: "cubic-bezier(0.16, 1, 0.3, 1)", fill: "backwards" }
-      );
-      const liquid = slot.querySelector<SVGGElement>(".liquid");
-      if (!liquid) return;
-      liquid.animate(
-        [{ transform: `translateY(${BOTTOM + 8}px)` }, { transform: liquid.style.transform }],
-        { duration: 1600, delay: 800 + n * 140, easing: "cubic-bezier(0.25, 1, 0.5, 1)", fill: "backwards" }
       );
     });
   });
@@ -34,23 +80,64 @@
   <span class="post post-right" aria-hidden="true"></span>
   <span class="base" aria-hidden="true"></span>
 
-  <ol class="rack" aria-label="Scores" bind:this={rack}>
-    {#each areas as area (area.id)}
-      <li class="slot">
-        <div
-          class="glass"
-          role="meter"
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={area.score}
-          aria-valuetext="{area.score}% full"
-          aria-labelledby="area-{area.id}"
-        >
-          <TestTube id={area.id} score={area.score} />
-        </div>
+  <ol class="rack" class:is-editing={editing} aria-label="Scores" bind:this={rack}>
+    {#each areas as area, n (area.id)}
+      <li class="slot" style:--n={n}>
+        {#if editing}
+          <div
+            class="glass is-editing"
+            role="slider"
+            tabindex="0"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={area.score}
+            aria-valuetext="{area.score}% full"
+            aria-labelledby="area-{area.id}"
+            onpointerdown={(e) => pointerDown(e, area.id)}
+            onpointermove={(e) => pointerMove(e, area.id)}
+            onkeydown={(e) => keyDown(e, area)}
+          >
+            <TestTube id={area.id} score={area.score} />
+            <span class="handle" style:top="{(levelY(area.score) / 220) * 100}%" aria-hidden="true">
+              <svg viewBox="0 0 16 16"><path d="M4.5 6.5 8 3l3.5 3.5M4.5 9.5 8 13l3.5-3.5" /></svg>
+            </span>
+          </div>
+        {:else}
+          <div
+            class="glass"
+            role="meter"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={area.score}
+            aria-valuetext="{area.score}% full"
+            aria-labelledby="area-{area.id}"
+          >
+            <TestTube id={area.id} score={area.score} />
+          </div>
+        {/if}
         <div class="label">
           <h2 class="area" id="area-{area.id}">{area.name}</h2>
-          <p class="score"><span class="num">{area.score}</span><span class="pct">%</span></p>
+          {#if editing}
+            <label class="score is-editing">
+              <span class="visually-hidden">{area.name} score, 0 to 100</span>
+              <input
+                class="num"
+                type="number"
+                inputmode="numeric"
+                min="0"
+                max="100"
+                step="1"
+                value={area.score}
+                oninput={(e) => {
+                  const raw = (e.currentTarget as HTMLInputElement).value;
+                  if (raw !== "") onscore?.(area.id, clamp(Number(raw)));
+                }}
+                onblur={(e) => ((e.currentTarget as HTMLInputElement).value = String(area.score))}
+              /><span class="pct">%</span>
+            </label>
+          {:else}
+            <p class="score"><span class="num">{pending ? "–" : area.score}</span><span class="pct">%</span></p>
+          {/if}
         </div>
         {#if area.score === lowest}
           <span class="sticker">Start<br />here</span>
@@ -132,6 +219,60 @@
     width: var(--tube-w);
   }
 
+  /* Levels ease to new values, one tube after another; while dragging they
+     follow the finger directly. */
+  .rack :global(.liquid) {
+    transition: transform 1400ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition-delay: calc(var(--n) * 120ms);
+  }
+
+  .rack.is-editing :global(.liquid) { transition: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rack :global(.liquid) { transition: none; }
+  }
+
+  /* Edit mode: the tube is a slider you drag. */
+  .glass.is-editing {
+    cursor: ns-resize;
+    touch-action: none;
+    border-radius: 999px;
+  }
+
+  .glass.is-editing:focus-visible { outline-offset: 6px; }
+
+  /* The grab handle sits on the liquid's surface, centered in the tube. */
+  .handle {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    border-radius: 50%;
+    background: var(--card);
+    color: var(--ink);
+    border: 2.5px solid var(--ink);
+    box-shadow: 0 2px 8px rgb(27 26 34 / 0.3);
+    pointer-events: none;
+  }
+
+  .handle svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+
+
+
+
   /* Where the tube's round bottom meets the base. */
   .glass::after {
     content: "";
@@ -170,6 +311,45 @@
   }
 
   .num { font-size: clamp(2rem, 4.4vw, 3.75rem); }
+
+  /* In edit mode the big number is a field you can type into. */
+  .score.is-editing input {
+    width: 3.2ch;
+    padding: 2px 0 0;
+    border: 0;
+    border-bottom: 2px dashed var(--ink-soft);
+    border-radius: 0;
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: clamp(2rem, 4.4vw, 3.75rem);
+    font-weight: 800;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    text-align: center;
+    font-variant-numeric: tabular-nums lining-nums;
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  .score.is-editing input::-webkit-inner-spin-button,
+  .score.is-editing input::-webkit-outer-spin-button { appearance: none; margin: 0; }
+
+  /* Where supported, the field hugs its digits so the % sits right beside it. */
+  @supports (field-sizing: content) {
+    .score.is-editing input { width: auto; field-sizing: content; min-width: 1.2ch; }
+  }
+
+  .score.is-editing input:focus { outline: none; border-bottom: 2px solid var(--work-6); }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
   .pct { font-size: clamp(0.875rem, 1.4vw, 1.25rem); margin-left: 2px; letter-spacing: 0; }
 
   /* The sticker sits beside the lip of the lowest tube, never over it.

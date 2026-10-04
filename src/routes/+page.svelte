@@ -1,19 +1,65 @@
 <script lang="ts">
   import Arrow from "#lib/components/Arrow.svelte";
   import BookCover from "#lib/components/BookCover.svelte";
-  import { checkin } from "#lib/content/start-where-you-are.ts";
+  import TopBar from "#lib/components/TopBar.svelte";
+  import { afterNavigate } from "$app/navigation";
   import { exercises } from "#lib/content/exercises.ts";
+  import { checkin } from "#lib/content/start-where-you-are.ts";
+  import { loadDashboard, type Answer } from "#lib/storage.ts";
+  import { session, shareHome } from "#lib/session.svelte.ts";
+  import { viewing, readViewing, withPerson } from "#lib/viewing.svelte.ts";
 
-  const { areas } = checkin;
+  afterNavigate(readViewing);
+
+  // Whose scores to show on the chapter 1 card: the shared person's, or your own.
+  let scores = $state<Answer[] | null>(null);
+  const scoreOwner = $derived(viewing.checked ? (viewing.name !== null ? viewing.id : (session.user?.id ?? null)) : null);
+
+  $effect(() => {
+    const id = scoreOwner;
+    scores = null;
+    if (!id) return;
+    let current = true;
+    loadDashboard(id)
+      .then((data) => {
+        if (current && data?.answers.length) scores = data.answers;
+      })
+      .catch(() => {});
+    return () => (current = false);
+  });
+
+  // Your own contents page (signed in, not looking at someone else's): offer a share link.
+  const canShare = $derived(session.user !== null && viewing.checked && viewing.name === null);
+  let copied = $state(false);
+
+  async function copyShareLink() {
+    if (!session.user) return;
+    const link = shareHome(session.user.id);
+    try {
+      await navigator.clipboard.writeText(link);
+      copied = true;
+      setTimeout(() => (copied = false), 2500);
+    } catch {
+      window.prompt("Copy this link to share your answers:", link);
+    }
+  }
+
+  const areaName = (id: string) => checkin.areas.find((a) => a.id === id)?.name ?? id;
+  const ordered = $derived(
+    scores ? checkin.areas.map((a) => scores!.find((s) => s.id === a.id)).filter((s) => s !== undefined) : []
+  );
+
 </script>
 
 <svelte:head>
-  <title>Designing Your Life</title>
+  <title>{viewing.name ? `${viewing.name}'s answers · ` : ""}Designing Your Life</title>
   <meta
     name="description"
     content="My answers to the exercises in Designing Your Life by Bill Burnett & Dave Evans, one chapter at a time."
   />
 </svelte:head>
+
+<TopBar back={false} />
 
 <div class="notebook measure">
   <div class="cover">
@@ -22,10 +68,27 @@
 
   <header class="intro">
     <h1 class="visually-hidden">Designing Your Life</h1>
+    {#if canShare && session.user}
+      <div class="whose">
+        <span class="whose-name">Your answers</span>
+        <button type="button" class="share" onclick={copyShareLink}>
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M6.5 9.5l3-3M7 4.5l1.2-1.2a2.8 2.8 0 0 1 4 4L11 8.5M9 11.5l-1.2 1.2a2.8 2.8 0 0 1-4-4L5 7.5" />
+          </svg>
+          <span aria-live="polite">{copied ? "Link copied" : "Copy share link"}</span>
+        </button>
+      </div>
+    {:else if viewing.name}
+      <div class="whose">
+        <span class="whose-name">{viewing.name}'s answers</span>
+        <span class="whose-mode">View only</span>
+      </div>
+    {/if}
     <p class="lede">
-      My answers to the exercises in <cite>Designing Your Life</cite> by Bill Burnett &amp; Dave Evans,
+      Answers to the exercises in <cite>Designing Your Life</cite> by Bill Burnett &amp; Dave Evans,
       one chapter at a time.
     </p>
+
   </header>
 
   <main class="index">
@@ -35,19 +98,21 @@
       {#each exercises as item (item.chapter)}
         <li>
           {#if item.href}
-            <a class="entry is-done" href={item.href}>
+            <a class="entry is-done" href={withPerson(item.href)}>
               <span class="num">{item.chapter}</span>
               <span class="names">
                 <span class="chapter">{item.title}</span>
                 {#if item.exercise}<span class="exercise">{item.exercise}</span>{/if}
               </span>
-              <span class="scores" aria-label="Scores">
-                {#each areas as area (area.id)}
-                  <span class="score" style:--swatch="var(--{area.id}-6)">
-                    <span class="visually-hidden">{area.name}</span>{area.score}
-                  </span>
-                {/each}
-              </span>
+              {#if item.chapter === 1 && ordered.length}
+                <span class="scores" aria-label="Scores">
+                  {#each ordered as a (a.id)}
+                    <span class="score" style:--swatch="var(--{a.id}-6)">
+                      <span class="visually-hidden">{areaName(a.id)}</span>{a.score}
+                    </span>
+                  {/each}
+                </span>
+              {/if}
               <span class="go"><Arrow /></span>
             </a>
           {:else}
@@ -82,7 +147,7 @@
     grid-template-rows: auto 1fr;
     column-gap: calc(var(--gap) * 2.5);
     align-items: start;
-    padding-top: clamp(32px, 7vh, 80px);
+    padding-top: clamp(16px, 4vh, 48px);
   }
 
   .cover { grid-area: cover; }
@@ -101,6 +166,60 @@
     line-height: 1.4;
     color: var(--ink-soft);
     text-wrap: pretty;
+  }
+
+
+
+  /* Same as the dashboard: a name pill, then a quiet text button. */
+  .whose {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 14px;
+    margin: 0 0 14px;
+  }
+
+  .whose-name {
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--card);
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+
+  .whose-mode {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .share {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink-soft);
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .share:hover { color: var(--ink); background: var(--card); }
+
+  .share svg {
+    width: 13px;
+    height: 13px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
   }
 
   .contents-title {
@@ -184,6 +303,9 @@
 
   .entry.is-done:focus-visible { outline-offset: 4px; }
 
+
+
+
   .scores {
     display: flex;
     gap: 10px;
@@ -251,6 +373,7 @@
     }
     .cover { position: static; max-width: 220px; }
     .lede { margin: 0; }
+    .whose { margin-bottom: 10px; }
   }
 
   @media (max-width: 559px) {
