@@ -1,55 +1,106 @@
-# Designing Your Life — problem statement
+# Designing Your Life
 
-No code exists yet. This file describes the problem, not a solution — don't scaffold
-a stack or a file structure from it without checking first; two attempts at that
-already got rejected (see below).
+A personal website for one person, the owner, that **displays** their own answers to
+the exercises in _Designing Your Life_ (Bill Burnett & Dave Evans). A few people
+(partner, friends, a coach) may see it. It is not public.
 
-## What this is for
+Built so far is the **"Start Where You Are"** check-in, with the owner's real answers in
+place. Nothing else is in scope until the owner asks.
 
-A personal website, for one person (the owner), that presents their own answers to
-the exercises in _Designing Your Life_ (Bill Burnett & Dave Evans). Starting scope is
-just the first exercise set, "Start Where You Are": the Health/Work/Play/Love
-check-in, Workview & Lifeview, and the Good Time Journal. Nothing beyond that is
-in scope until asked for.
+Read these before design work:
+- `PRODUCT.md` covers the product truth: users, purpose, stack, constraints.
+- `DESIGN.md` and `.impeccable/design.json` hold the design system. They were derived
+  from the shipped page; follow them on every new page.
+- `.impeccable/surfaces/src-routes-page-svelte.md` is the direction contract for the
+  check-in page.
 
-## The actual shape of the problem
+## How content works
 
-The owner does **not** want to write or edit anything inside the website itself —
-no forms, no textareas, no "fill this in" UI. They give their answers by talking
-them through (here, in conversation), and the website's only job is to **display**
-that content well. So this is a publishing/presentation problem, not an input/data
-problem: there is no form to design, no persistence layer to build, no save state to
-manage. Whatever stores the content between conversations just needs to be something
-Claude can edit from chat — it is not a UI concern.
+The owner never edits anything inside the site: no forms, no inputs, no save state.
+They talk their answers through in chat, and Claude writes them into a content file.
 
-The part that actually matters is that the output looks good. Two visual attempts
-so far were both rejected:
+The workflow that worked:
+1. The owner gives a score and rambles about why.
+2. Claude drafts a tighter **first-person note in the owner's voice**, about 60–90
+   words. Keep every point they made and add nothing they didn't say.
+3. Show the draft and **wait for approval** before writing it in. Mention anything
+   left out, such as self-deprecating lines ("I'm kind of a boring person"), and offer
+   to put it back.
+4. Ask for specifics rather than inventing them. For example, when the owner wanted
+   more about their girlfriend, Claude asked prompting questions and used only what
+   they answered.
+5. When every answer is real, set `placeholder: false`. That hides the "Placeholder
+   scores" chip and the colophon line.
 
-1. A form-based app (textareas, IndexedDB, autosave indicators, a left nav across
-   chapters) — rejected for being the wrong shape entirely (see above: no forms).
-2. A static read-only redesign (warm paper/editorial look: cream background,
-   serif type, a centered card, inline rating meters) — rejected on pure visual
-   taste ("looks like ugly as fuck" / "I don't like any of this"), with no specifics
-   given on what would look better.
+Content for the check-in lives in `src/lib/content/start-where-you-are.ts`. The
+current answers are Health 80, Work 20, Play 40, Love 70, so Work carries the
+"Start here" sticker.
 
-Take neither as a direction to iterate from. The brief, as given, is "a nice looking
-output" — that's it. No aesthetic reference, mood, or example has been supplied.
+## Stack and commands
 
-## Open questions worth asking before building again
+SvelteKit 3 + Svelte 5 with `@sveltejs/adapter-static`; every page is prerendered to
+plain HTML. Node 24 comes from mise.
 
-- What does "nice looking" mean to the owner, concretely? Worth asking for a
-  reference — a site, an app, a style — rather than guessing a third time.
-- Does this need to be a built app at all, or would a well-designed static document
-  (e.g. a single polished page, or even something like a nicely typeset PDF) satisfy
-  "nice looking output" with far less code than a framework app implies?
-- How does content actually get from "the owner said it in chat" into the published
-  page — hand-edited by Claude each time, or something else?
+```sh
+npm run dev              # http://localhost:5173 (add `-- --host` for phone on the LAN: http://10.0.0.250:5173)
+npm run build            # static site in build/
+npm run check            # svelte-check, must be 0 errors
+```
 
-## Tooling available, not yet used meaningfully
+SvelteKit 3 differs from SvelteKit 2 in ways that tripped up the port:
+- Kit config goes in `vite.config.ts` as `sveltekit({ adapter: adapter() })`. There
+  is **no `svelte.config.js`**.
+- `$lib` is removed. Use **`#lib/...`**, mapped via `"imports"` in `package.json`.
+  Import TS modules **with the `.ts` extension** (`#lib/content/start-where-you-are.ts`),
+  or svelte-check can't resolve them.
+- `tsconfig.json` extends `"$app/tsconfig"`, not `./.svelte-kit/tsconfig.json`.
 
-The **Impeccable** Claude Code plugin (`pbakaus/impeccable`, https://impeccable.style/)
-is installed (via `/plugin`, marketplace `pbakaus/impeccable`) for design critique —
-automated checks against generic "AI slop" UI defaults. It needs a Claude Code
-session restart to be loadable as a skill (it was installed mid-session). It's a
-polish/critique pass on existing UI, not a source of visual direction — it won't
-answer the open questions above.
+Layout:
+- `src/app.css`: global tokens (wall, ink, the four 10-step area ladders), the base,
+  and `.measure`, the shared 1040px width that every block sits on.
+- `src/lib/components/TestTube.svelte`: one SVG tube filled to `score`, with a sloshing
+  wave, bubbles, and a still meniscus under reduced motion.
+- `src/lib/components/TubeRack.svelte`: the rack, the labels, the "Start here"
+  sticker, and the load animation (tubes drop in, then fill).
+- `src/routes/+page.svelte`: masthead, rack, notes, colophon.
+- `static/fonts/`: self-hosted Bricolage Grotesque variable font (opsz/wdth/wght).
+
+## Design decisions the owner made (don't undo)
+
+- **Gauges show fullness visually**, like a liquid level. Use no step numbers, tick
+  labels, or per-level names; the owner rejected a 10-chip paint ladder for this.
+- **Test tubes in a single rack.** The rack's top bar sits **behind** the tubes so it
+  never covers a level; the owner flagged this.
+- **The four area colors are approved**: Health green, Work blue, Play marigold, Love
+  coral, each a 10-step ladder.
+- **No "Checked in on <date>" line.** The owner removed it.
+- The lowest area gets the black "Start here" sticker. On phone it sits centered
+  above that tube's lip.
+- Rejected before this build: a form app with textareas and autosave, and a
+  cream/serif editorial card layout ("ugly"). Don't drift back toward either.
+
+How the look was reached: Impeccable's direction round offered several cards, and the
+owner picked "Paint Chip Cards". The owner then iterated: paint chips, then a glass,
+then a test tube on cards, then four tubes in one rack. Earlier versions are saved
+in `.impeccable/snapshots/` (`tubes-in-cards/`, `plain-html-rack/`) for reverting.
+
+## Open questions
+
+- **Future exercises** (Workview & Lifeview, Good Time Journal): one page each plus a
+  contents page at `/`, or one long scroll? Claude proposed one page per exercise; the
+  owner hasn't decided. Design navigation once a second page exists.
+- The check-in is meant to be repeated over time. If the owner does a second one,
+  decide whether to keep a history and compare check-ins.
+
+## Tooling notes
+
+- The **Impeccable** plugin (`/impeccable:impeccable`) drove this build: init, the
+  direction round, the craft floor, the detector, the finish reviewer, and the
+  documenter. Its design hook auto-scans UI files on edit.
+- Screenshots: headless Chrome is at `/usr/bin/google-chrome`. Use
+  `--headless=new --force-prefers-reduced-motion --window-size=W,H --screenshot=...`.
+  Serve `build/` with a **fresh** server per build. A long-running `vite preview`
+  kept serving stale asset hashes after a rebuild and produced black screenshots.
+- To test edge cases (for example a different lowest area), build a throwaway copy in
+  the scratchpad. Never change the real content file just to take a screenshot.
+- Git: local only so far; the owner will add a remote later. Commit only when asked.
