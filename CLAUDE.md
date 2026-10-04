@@ -2,17 +2,19 @@
 
 A personal website for one person, the owner, that **displays** their own answers to
 the exercises in _Designing Your Life_ (Bill Burnett & Dave Evans). A few people
-(partner, friends, a coach) may see it. It is not public.
+(partner, friends, a coach) may see it. It is public: anyone with the link, and the GitHub repo is public too.
 
-Built so far is the **"Start Where You Are"** check-in, with the owner's real answers in
-place. Nothing else is in scope until the owner asks.
+Built so far: a landing/contents page at `/`, and the **"Start Where You Are"** check-in
+(Health / Work / Play / Love Dashboard) at `/start-where-you-are/`, with the owner's real
+answers. It is live at https://designing-your-life.pinkoa2.lol (GitHub Pages, deployed on
+every push to `main`). Nothing else is in scope until the owner asks.
 
 Read these before design work:
 - `PRODUCT.md` covers the product truth: users, purpose, stack, constraints.
 - `DESIGN.md` and `.impeccable/design.json` hold the design system. They were derived
   from the shipped page; follow them on every new page.
-- `.impeccable/surfaces/src-routes-page-svelte.md` is the direction contract for the
-  check-in page.
+- `.impeccable/surfaces/` holds each page's direction contract: the landing/contents
+  page (`src-routes-page-svelte.md`) and the check-in (`src-routes-start-where-you-are-page-svelte.md`).
 
 ## How content works
 
@@ -62,7 +64,15 @@ Layout:
   wave, bubbles, and a still meniscus under reduced motion.
 - `src/lib/components/TubeRack.svelte`: the rack, the labels, the "Start here"
   sticker, and the load animation (tubes drop in, then fill).
-- `src/routes/+page.svelte`: masthead, rack, notes, colophon.
+- `src/routes/+page.svelte`: the landing page, with the book's real cover (`BookCover.svelte`,
+  `static/images/designing-your-life-cover.jpg` from Open Library, credited to Knopf in the
+  footer; the owner rejected tubes on the cover and then a plain blue drawn one) beside a numbered contents list of all 12
+  chapters. Finished exercises are white cards; the rest are "Not yet" rows.
+- `src/routes/start-where-you-are/+page.svelte`: the check-in. It has a link back to all
+  exercises, then the masthead, rack, notes and colophon.
+- `src/lib/content/exercises.ts`: the chapter list. Give an exercise an `href` once its
+  page exists. The list was written from memory, so check it against the book.
+- Each page builds to its own folder (`trailingSlash = "always"`), so links end in `/`.
 - `static/fonts/`: self-hosted Bricolage Grotesque variable font (opsz/wdth/wght).
 
 ## Design decisions the owner made (don't undo)
@@ -86,9 +96,9 @@ in `.impeccable/snapshots/` (`tubes-in-cards/`, `plain-html-rack/`) for revertin
 
 ## Open questions
 
-- **Future exercises** (Workview & Lifeview, Good Time Journal): one page each plus a
-  contents page at `/`, or one long scroll? Claude proposed one page per exercise; the
-  owner hasn't decided. Design navigation once a second page exists.
+- **Future exercises** each get their own page at `/<slug>/`, listed on the contents
+  page at `/` (decided). Use the arrow in `Arrow.svelte` for links, never a text arrow
+  character.
 - The check-in is meant to be repeated over time. If the owner does a second one,
   decide whether to keep a history and compare check-ins.
 

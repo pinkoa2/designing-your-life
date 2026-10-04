@@ -1,145 +1,229 @@
 <script lang="ts">
-  import TubeRack from "#lib/components/TubeRack.svelte";
+  import Arrow from "#lib/components/Arrow.svelte";
+  import BookCover from "#lib/components/BookCover.svelte";
   import { checkin } from "#lib/content/start-where-you-are.ts";
+  import { exercises } from "#lib/content/exercises.ts";
 
-  const { areas, placeholder } = checkin;
-
-  const lowest = Math.min(...areas.map((a) => a.score));
-  const highest = Math.max(...areas.map((a) => a.score));
-  const names = (score: number) =>
-    areas.filter((a) => a.score === score).map((a) => a.name).join(" & ");
+  const { areas } = checkin;
 </script>
 
 <svelte:head>
-  <title>Start Where You Are</title>
-  <meta name="description" content="A Health, Work, Play and Love check-in from Designing Your Life." />
+  <title>Designing Your Life</title>
+  <meta
+    name="description"
+    content="My answers to the exercises in Designing Your Life by Bill Burnett & Dave Evans, one chapter at a time."
+  />
 </svelte:head>
 
-<header class="masthead measure">
-  <h1 class="title">Start Where You&nbsp;Are</h1>
-  <div class="masthead-side">
-    <p class="lede">A check-in on Health, Work, Play and Love, from <cite>Designing Your Life</cite>.</p>
-    <p class="summary">
-      Most room to grow: <strong>{names(lowest)}</strong>, at {lowest}%.
-      Strongest: <strong>{names(highest)}</strong>, at {highest}%.
-    </p>
-    {#if placeholder}<p class="checked"><span class="placeholder">Placeholder scores</span></p>{/if}
+<div class="notebook measure">
+  <div class="cover">
+    <BookCover />
   </div>
-</header>
 
-<main class="measure">
-  <TubeRack {areas} {lowest} />
+  <header class="intro">
+    <h1 class="visually-hidden">Designing Your Life</h1>
+    <p class="lede">
+      My answers to the exercises in <cite>Designing Your Life</cite> by Bill Burnett &amp; Dave Evans,
+      one chapter at a time.
+    </p>
+  </header>
 
-  <ol class="notes" aria-label="Why each score">
-    {#each areas as area (area.id)}
-      <li class="note" style:--swatch="var(--{area.id}-6)">
-        <h3 class="note-head">{area.name}</h3>
-        <p class="note-body">{area.note}</p>
-      </li>
-    {/each}
-  </ol>
-</main>
+  <main class="index">
+    <h2 class="contents-title">Contents</h2>
+
+    <ol class="contents">
+      {#each exercises as item (item.chapter)}
+        <li>
+          {#if item.href}
+            <a class="entry is-done" href={item.href}>
+              <span class="num">{item.chapter}</span>
+              <span class="names">
+                <span class="chapter">{item.title}</span>
+                {#if item.exercise}<span class="exercise">{item.exercise}</span>{/if}
+              </span>
+              <span class="scores" aria-label="Scores">
+                {#each areas as area (area.id)}
+                  <span class="score" style:--swatch="var(--{area.id}-6)">
+                    <span class="visually-hidden">{area.name}</span>{area.score}
+                  </span>
+                {/each}
+              </span>
+              <span class="go"><Arrow /></span>
+            </a>
+          {:else}
+            <div class="entry">
+              <span class="num">{item.chapter}</span>
+              <span class="names">
+                <span class="chapter">{item.title}</span>
+                {#if item.exercise}<span class="exercise">{item.exercise}</span>{/if}
+              </span>
+              <span class="later">Not yet</span>
+            </div>
+          {/if}
+        </li>
+      {/each}
+    </ol>
+  </main>
+</div>
 
 <footer class="colophon measure">
-  {#if placeholder}
-    <p>Scores and notes are placeholders until the real answers go in.</p>
-  {/if}
-  <p>Exercise from <cite>Designing Your Life</cite> by Bill Burnett &amp; Dave Evans, “Start Where You Are.”</p>
+  <p>Exercises from <cite>Designing Your Life</cite> by Bill Burnett &amp; Dave Evans. Cover © Alfred A. Knopf, via Open Library.</p>
 </footer>
 
 <style>
-  .masthead {
+  /* Desktop: the cover holds the left column while the intro and contents
+     run down the right. */
+  .notebook {
     display: grid;
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-    align-items: end;
-    gap: var(--gap) calc(var(--gap) * 2);
-    padding-top: clamp(32px, 6vh, 72px);
-    padding-bottom: clamp(20px, 3vh, 36px);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-areas:
+      "cover intro"
+      "cover index";
+    grid-template-rows: auto 1fr;
+    column-gap: calc(var(--gap) * 2.5);
+    align-items: start;
+    padding-top: clamp(32px, 7vh, 80px);
   }
 
-  .title {
-    margin: 0;
-    font-size: clamp(2.75rem, 7vw, 5.75rem);
-    font-weight: 800;
-    line-height: 0.92;
-    letter-spacing: -0.018em;
-    text-wrap: balance;
-  }
+  .cover { grid-area: cover; }
+  .intro { grid-area: intro; }
+  .index { grid-area: index; }
 
-  .masthead-side { padding-bottom: 0.4em; }
+  .cover {
+    position: sticky;
+    top: clamp(24px, 5vh, 56px);
+  }
 
   .lede {
-    margin: 0 0 14px;
-    font-size: 1.0625rem;
-    color: var(--ink-soft);
-    max-width: 40ch;
-  }
-
-  .summary {
-    margin: 0 0 14px;
+    margin: 0 0 clamp(20px, 3vh, 32px);
+    max-width: 44ch;
     font-size: 1.25rem;
-    line-height: 1.35;
-    font-weight: 500;
-    max-width: 34ch;
+    line-height: 1.4;
+    color: var(--ink-soft);
     text-wrap: pretty;
   }
 
-  .summary strong { font-weight: 800; }
+  .contents-title {
+    margin: 0 0 clamp(16px, 2.5vh, 28px);
+    font-size: clamp(2rem, 4.4vw, 3.75rem);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+  }
 
-  .checked {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 6px 10px;
+  .contents {
+    list-style: none;
     margin: 0;
-    font-size: 0.875rem;
+    padding: 0;
+  }
+
+  .entry {
+    display: grid;
+    grid-template-columns: 2.25em minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 14px;
+    padding: 14px 4px;
+    border-top: 1px solid rgb(27 26 34 / 0.1);
     color: var(--ink-soft);
+  }
+
+  li:last-child .entry { border-bottom: 1px solid rgb(27 26 34 / 0.1); }
+
+  .num {
+    font-size: clamp(1rem, 1.8vw, 1.5rem);
+    font-weight: 800;
     font-variant-numeric: tabular-nums;
   }
 
-  .placeholder {
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: var(--play-2);
-    color: var(--play-9);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  .notes {
-    list-style: none;
-    margin: clamp(32px, 5vh, 56px) 0 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--gap);
-  }
-
-  .note-head {
+  .names {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0 0 8px;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .chapter {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .exercise {
+    font-size: 0.875rem;
+    line-height: 1.35;
+  }
+
+  .later {
     font-size: 0.8125rem;
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }
 
-  .note-head::before {
+  /* The finished exercise is a real object on the wall: a white card. */
+  .entry.is-done {
+    grid-template-columns: 2.25em minmax(0, 1fr) auto auto;
+    margin: 0 0 6px;
+    padding: 18px 18px 18px 16px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--card);
+    box-shadow: var(--shadow-card);
+    color: var(--ink);
+    text-decoration: none;
+    transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .entry.is-done .chapter { font-size: clamp(1rem, 1.8vw, 1.5rem); font-weight: 800; }
+  .entry.is-done .exercise { color: var(--ink-soft); }
+
+  .entry.is-done:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 3px rgb(27 26 34 / 0.08), 0 18px 32px -14px rgb(27 26 34 / 0.38);
+  }
+
+  .entry.is-done:focus-visible { outline-offset: 4px; }
+
+  .scores {
+    display: flex;
+    gap: 10px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .score {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .score::before {
     content: "";
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
     border-radius: 2px;
     background: var(--swatch);
   }
 
-  .note-body {
-    margin: 0;
-    line-height: 1.55;
-    text-wrap: pretty;
+  .go {
+    font-size: 1.25rem;
+    font-weight: 700;
+    transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .entry.is-done:hover .go { transform: translateX(3px); }
+
+  /* The row under the finished card starts flush, without a doubled rule. */
+  li:has(.is-done) + li .entry { border-top: 0; }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .colophon {
@@ -149,16 +233,38 @@
     color: var(--ink-soft);
   }
 
-  .colophon p { margin: 0 0 4px; }
+  .colophon p { margin: 0; }
 
-  @media (max-width: 1039px) {
-    .masthead { grid-template-columns: 1fr; align-items: start; }
-    .notes { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
+  /* Phone and tablet: a small cover with the intro beside it, so the
+     contents list starts right below instead of after a tall image. */
+  @media (max-width: 899px) {
+    .notebook {
+      grid-template-columns: minmax(96px, 34%) minmax(0, 1fr);
+      grid-template-areas:
+        "cover intro"
+        "index index";
+      grid-template-rows: auto auto;
+      column-gap: 20px;
+      row-gap: 32px;
+      align-items: center;
+      padding-top: 28px;
+    }
+    .cover { position: static; max-width: 220px; }
+    .lede { margin: 0; }
   }
 
-  @media (max-width: 719px) {
-    .masthead { padding-top: 28px; }
-    .summary { font-size: 1.125rem; }
-    .notes { grid-template-columns: 1fr; row-gap: 24px; }
+  @media (max-width: 559px) {
+    .lede { font-size: 1rem; }
+    .entry.is-done {
+      grid-template-columns: 2.25em minmax(0, 1fr) auto;
+      row-gap: 10px;
+    }
+    .scores { grid-column: 2 / 3; grid-row: 2; }
+    .go { grid-column: 3; grid-row: 1 / 3; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .entry.is-done,
+    .go { transition: none; }
   }
 </style>

@@ -1,0 +1,61 @@
+{
+  "title": "Choose the layout for your landing page",
+  "question": "The look is already set: the same wall, colors, type and white objects as your check-in. This is only about how the landing page is arranged. Pick one, re-roll for three different layouts, or steer in your own words.",
+  "options": [
+    {
+      "id": "timeline",
+      "label": "The Journey Line",
+      "kicker": "THE ROLL",
+      "thesis": "The book as a path: a line runs through every exercise, and a sticker marks where you are.",
+      "palette": ["#e9ecee", "#ffffff", "#1b1a22", "#2cb589", "#6997fe", "#d99500", "#fe6049"],
+      "materials": ["drawn cover card at the start of the line", "white stops along a path", "the black 'You are here' sticker"],
+      "viewport": "Top left: the drawn cover card with the title and authors. From the cover, a line runs across the page (down the page on phone) through a stop for each exercise. The Start Where You Are stop is filled in, shows four mini tubes, and links to your check-in. Later stops are hollow, with their names in soft ink and 'not yet'.",
+      "risk": "With only one exercise done, most of the line is empty for now. That's honest, but sparse.",
+      "wireframe": {"cols": 12, "rows": 10, "regions": [
+        {"label": "cover", "x": 0, "y": 0, "w": 3, "h": 5, "accent": true},
+        {"label": "title + authors", "x": 3, "y": 1, "w": 6, "h": 2},
+        {"label": "journey line", "x": 0, "y": 6, "w": 12, "h": 1},
+        {"label": "Start Where You Are (done)", "x": 0, "y": 7, "w": 3, "h": 3, "accent": true},
+        {"label": "Workview (not yet)", "x": 3, "y": 7, "w": 3, "h": 3},
+        {"label": "Good Time Journal (not yet)", "x": 6, "y": 7, "w": 3, "h": 3},
+        {"label": "more…", "x": 9, "y": 7, "w": 3, "h": 3}
+      ]}
+    },
+    {
+      "id": "cards",
+      "label": "Exercise Shelf",
+      "thesis": "A big drawn cover on top, then one white card per exercise. Done cards show a preview of the page; upcoming ones are faint outlines.",
+      "palette": ["#e9ecee", "#ffffff", "#1b1a22", "#4a4955"],
+      "materials": ["drawn cover as the hero", "white cards with soft shadows", "a mini rack preview on the done card"],
+      "viewport": "The drawn cover sits large and centered, with the title and authors beside it. Below is a grid of exercise cards. Start Where You Are is a full white card with a tiny version of your four tubes and its scores. The rest are dashed outlines with the exercise name.",
+      "risk": "A grid of cards is the most familiar layout of the three. It's clear, but it looks like a lot of other sites.",
+      "wireframe": {"cols": 12, "rows": 10, "regions": [
+        {"label": "drawn cover", "x": 3, "y": 0, "w": 3, "h": 5, "accent": true},
+        {"label": "title + authors", "x": 6, "y": 1, "w": 4, "h": 3},
+        {"label": "Start Where You Are (preview)", "x": 0, "y": 6, "w": 4, "h": 4, "accent": true},
+        {"label": "Workview (outline)", "x": 4, "y": 6, "w": 4, "h": 4},
+        {"label": "Good Time Journal (outline)", "x": 8, "y": 6, "w": 4, "h": 4}
+      ]}
+    },
+    {
+      "id": "notebook",
+      "label": "Lab Notebook Index",
+      "thesis": "Like the contents page of a lab notebook: the cover on the left, and a numbered list of the book's chapters and exercises on the right.",
+      "palette": ["#e9ecee", "#ffffff", "#1b1a22", "#2cb589"],
+      "materials": ["drawn cover pinned at left", "a numbered contents list", "a color swatch and mini tubes on the done entry"],
+      "viewport": "Left column: the drawn cover, which stays in place as you scroll on desktop. Right column: a large 'Contents' heading, then numbered rows, one per chapter with its exercise. The Start Where You Are row is bold, has your four mini tubes beside it, and links to the check-in. The other rows are in soft ink with 'not yet'. On phone, the cover sits on top and the list goes below.",
+      "risk": "The quietest of the three. It reads clearly but has the least going on visually.",
+      "wireframe": {"cols": 12, "rows": 10, "regions": [
+        {"label": "drawn cover", "x": 0, "y": 0, "w": 4, "h": 7, "accent": true},
+        {"label": "Contents heading", "x": 5, "y": 0, "w": 7, "h": 1},
+        {"label": "1 Start Where You Are (done)", "x": 5, "y": 2, "w": 7, "h": 2, "accent": true},
+        {"label": "2 Workview & Lifeview", "x": 5, "y": 4, "w": 7, "h": 1},
+        {"label": "3 Good Time Journal", "x": 5, "y": 5, "w": 7, "h": 1},
+        {"label": "4 Mind Mapping", "x": 5, "y": 6, "w": 7, "h": 1},
+        {"label": "5 Odyssey Plans …", "x": 5, "y": 7, "w": 7, "h": 1}
+      ]}
+    }
+  ],
+  "reroll": true,
+  "steer": true
+}
