@@ -1,6 +1,6 @@
 ---
 name: Designing Your Life
-description: One person's answers to the Designing Your Life exercises, set out as clean, playful lab objects on a pale wall.
+description: Each person's answers to the Designing Your Life exercises, set out as clean, playful lab objects on a pale wall.
 colors:
   wall: "#e9ecee"
   card: "#ffffff"
@@ -154,7 +154,7 @@ Two directions were explicitly rejected by the owner and stay rejected: a form-b
 - Gauges are liquid in glass: continuous fill, no ticks, no step names.
 - One family, Bricolage Grotesque, carrying hierarchy through weight 800 against 400.
 - Gentle, physical motion: drop, fill, slosh, rise; still and legible with motion off.
-- Display only.
+- Read-only for visitors; the signed-in owner edits in place on the same page.
 
 ## Colors
 
@@ -249,8 +249,18 @@ The white stand that holds all four tubes together: a top bar across the full me
 ### Start-here Sticker
 A round Lab Ink disc (66px, 44px on phone) with "Start / here" in white uppercase at 800. It marks the lowest-scoring area only. It sits beside that tube's lip, on the outside right (mirrored to the left for the last tube), never over the glass; on phone it sits centered just above the lip.
 
-### Chips
-- **Placeholder chip:** Play step 2 pill with Play step 9 text, 0.75rem, 700, 0.04em uppercase, 2px 8px padding. Appears in the masthead only while content is placeholder, alongside a plain-text placeholder line in the colophon.
+### Whose-answers row
+At the top of the dashboard and the landing page: a Lab Ink pill (0.8125rem, 700, white) naming whose answers these are ("Your dashboard", "Your answers", "Alex's answers"). Next to it, either a quiet text button ("Copy share link", with a link icon) for the owner, or a "VIEW ONLY" label for everyone else.
+
+### Edit affordances
+Editing is inline and quiet, never a separate form screen.
+- **Text buttons:** "Edit my gauges" sits at the top right of the rack, and each note has its own "Edit" / "Write" button at the right of its heading. They are 0.8125rem, 700, Soft Ink with a small drawn pencil icon, and show a white pill on hover.
+- **Gauges in edit mode:** each tube becomes a slider. A centered round handle with up/down chevrons sits on the liquid surface; the big number becomes a typeable field with a dashed underline. A sticky bottom bar holds Cancel / Save gauges.
+- **A note in edit mode:** the same text on the same wall, marked by a 1.5px dashed outline that turns solid in the area's step-6 color on focus. Cancel / Save note pills sit underneath it. Empty notes show the area's writing prompt in italic Soft Ink.
+- **Pills:** white with the Object shadow for secondary actions, Lab Ink for primary.
+
+### Sign-in page
+Minimal by the owner's choice: one narrow column with the heading, one line that mentions the book, an email field, a full-width Lab Ink button, an invite-only note, and a "See an example" link. It has no test tubes and no cover.
 
 ### Area Note
 A column of prose explaining one area's score. Head: the area name in the Label voice, led by a 10px step-6 swatch with 2px corners. Body: Body text in Ink. Notes follow the rack's area order and columns.
@@ -259,7 +269,7 @@ A column of prose explaining one area's score. Head: the area name in the Label 
 Any focusable element gets a 2px Work step 6 outline at 3px offset with 4px corners.
 
 ### Motion
-On load (motion allowed), each tube drops 48px into the rack (700ms, cubic-bezier(0.16, 1, 0.3, 1), 110ms stagger), then its liquid fills from empty to the score (1600ms, cubic-bezier(0.25, 1, 0.5, 1), starting at 800ms, 140ms stagger). The page renders in its final state; animation only plays from a starting pose, so nothing is ever hidden.
+On load (motion allowed), each tube drops 48px into the rack (700ms, cubic-bezier(0.16, 1, 0.3, 1), 110ms stagger). The rack starts empty while the answers load: numbers show "–" and the summary line and sticker are hidden. Then each liquid eases up to its score (1400ms, cubic-bezier(0.25, 1, 0.5, 1), 120ms stagger). Default levels are never shown first. While dragging in edit mode, the liquid follows the pointer with no easing.
 
 ## Do's and Don'ts
 
@@ -269,13 +279,14 @@ On load (motion allowed), each tube drops 48px into the rack (700ms, cubic-bezie
 - **Do** keep the four area hues and their ten-step ladders exactly as defined, and use them by step role: liquid 5 to 7, back wave 4, empty wash 14% of 4, swatch 6, chip 2 with 9 text.
 - **Do** keep the rack's bar, posts and base behind the tubes so a level is never covered.
 - **Do** mark the lowest area with the single black Start-here sticker, beside the lip, never over the glass.
-- **Do** render pages as display only, prerendered, with content in `src/lib/content/*.ts` files that Claude edits from chat; a content change is an edit to data, never to layout.
+- **Do** keep editing inline on the page (drag, type, edit in place) and only for the signed-in owner; everyone else gets the same page read-only.
 - **Do** give every animated element a still, fully legible reduced-motion state.
-- **Do** flag placeholder content on screen until the owner's real answers replace it.
+- **Do** keep pages other than the dashboard quiet: the test tubes belong to the dashboard and the gauge, not to the sign-in page or the book cover.
 
 ### Don't:
 - **Don't** add tick marks, step labels, or per-level names ("low", "thriving", and so on) to a gauge.
-- **Don't** add forms, inputs, textareas, edit buttons, save states, or any "fill this in" UI.
+- **Don't** build separate form screens or a form-app layout; editing happens in place.
+- **Don't** put test tubes on the book cover or the sign-in page; the owner rejected both.
 - **Don't** introduce a fifth hue or a brand accent; color belongs to the four areas.
 - **Don't** let any rack part, sticker, or label overlap a liquid level.
 - **Don't** return to the rejected directions: cream paper, serif editorial type, a centered card, or inline rating meters.

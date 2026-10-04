@@ -23,7 +23,11 @@ US East), not in content files.
 
 - **Accounts:** invite-only. Sign-up is disabled in Supabase, and people are added in
   Authentication → Users ("Create new user", auto-confirm). They sign in with an emailed
-  link (`/sign-in/`). There are currently two people: Alex (the owner) and Ting.
+  link (`/sign-in/`). There are currently two people: Alex (the owner) and Ting. To set a
+  name: `insert into public.profiles (id, display_name) select id, 'Name' from auth.users
+  where lower(email) = '…' on conflict (id) do update set display_name =
+  excluded.display_name returning *;` (the Users list's own "Display name" column is
+  separate and unused).
 - **Sharing:** every dashboard is public read-only by link, `?u=<user id>`, and the ID is
   carried on every page link (`withPerson()` in `src/lib/viewing.svelte.ts`). Nothing lists
   dashboards; the owner wants link-only, with no directory.
@@ -65,13 +69,25 @@ Layout:
 - `src/lib/components/TestTube.svelte`: one SVG tube filled to `score`, with a sloshing
   wave, bubbles, and a still meniscus under reduced motion.
 - `src/lib/components/TubeRack.svelte`: the rack, the labels, the "Start here"
-  sticker, and the load animation (tubes drop in, then fill).
+  sticker, and slider mode for editing. Tubes drop in on load; levels ease up via a
+  CSS transition once answers arrive (`Dashboard` keeps them empty until then).
+- `src/lib/components/Dashboard.svelte`: one person's dashboard: the whose-answers row
+  (pill plus share link or "View only"), the summary, the rack, the notes, and all editing.
+- `src/lib/components/TopBar.svelte`: "All exercises" (keeps `?u=`), and sign-in state.
+- `src/lib/session.svelte.ts` (auth, share links), `src/lib/storage.ts` (Supabase
+  load/save), `src/lib/viewing.svelte.ts` (`?u=` person, `withPerson()`),
+  `src/lib/supabase.ts` (client, public key).
+- `src/routes/sign-in/+page.svelte`: minimal email-link sign-in, plus "See an example",
+  which links to the owner's shared answers (`src/lib/content/example.ts`).
+- `src/routes/view/`: only redirects old `/view/?u=` links to `/start-where-you-are/?u=`.
 - `src/routes/+page.svelte`: the landing page, with the book's real cover (`BookCover.svelte`,
   `static/images/designing-your-life-cover.jpg` from Open Library, credited to Knopf in the
   footer; the owner rejected tubes on the cover and then a plain blue drawn one) beside a numbered contents list of all 12
   chapters. Finished exercises are white cards; the rest are "Not yet" rows.
-- `src/routes/start-where-you-are/+page.svelte`: the check-in. It has a link back to all
-  exercises, then the masthead, rack, notes and colophon.
+- `src/routes/start-where-you-are/+page.svelte`: picks whose dashboard to show (`?u=`
+  person, else your own when signed in, else an example) and renders `Dashboard`.
+- The landing page also shows the chapter 1 card's real scores (for the `?u=` person or
+  you) and, when signed in, a "Your answers · Copy share link" row.
 - `src/lib/content/exercises.ts`: the chapter list. Give an exercise an `href` once its
   page exists. The list was written from memory, so check it against the book.
 - Each page builds to its own folder (`trailingSlash = "always"`), so links end in `/`.
@@ -88,6 +104,13 @@ Layout:
 - **No "Checked in on <date>" line.** The owner removed it.
 - The lowest area gets the black "Start here" sticker. On phone it sits centered
   above that tube's lip.
+- **Editing:** "Edit my gauges" edits all four together (drag the centered handle or
+  type the number); notes are edited one at a time, in place, with a dashed outline and
+  no white box.
+- **Test tubes stay on the dashboard.** The owner rejected them on the book cover and on
+  the sign-in page. Keep the sign-in page minimal: no cover, no tubes.
+- **Landing page:** the book's real cover beside the contents list. On phone, a small
+  cover sits beside the intro text; a big left-aligned cover looked off.
 - Rejected before this build: a form app with textareas and autosave, and a
   cream/serif editorial card layout ("ugly"). Don't drift back toward either.
 
@@ -115,4 +138,18 @@ in `.impeccable/snapshots/` (`tubes-in-cards/`, `plain-html-rack/`) for revertin
   kept serving stale asset hashes after a rebuild and produced black screenshots.
 - To test edge cases (for example a different lowest area), build a throwaway copy in
   the scratchpad. Never change the real content file just to take a screenshot.
-- Git: local only so far; the owner will add a remote later. Commit only when asked.
+- Git: `git@github.com:pinkoa2/designing-your-life.git` (public). Commit and push only
+  when asked; a push to `main` deploys.
+- `.github/workflows/keep-alive.yml` pings Supabase every 3 days so the free project
+  doesn't pause. GitHub disables scheduled jobs after about 60 days without commits;
+  re-enable it in the Actions tab.
+- Supabase's built-in email sender allows only about 2 sign-in emails an hour. If that
+  becomes a problem, the plan is custom SMTP through Resend (free) on `pinkoa2.lol`; this
+  isn't set up yet. Sessions persist per browser; Safari drops them after about 7 days
+  without a visit.
+- Supabase settings already done: Data API on, auto-expose new tables off, automatic RLS
+  on, email sign-up disabled, and Site URL plus redirect URLs for the live site,
+  localhost:5173 and 10.0.0.250:5173.
+- Testing flows: drive headless Chrome over CDP (`--remote-debugging-port`, Node's
+  built-in WebSocket) to click, drag and screenshot. Signed-in flows need a real emailed
+  link, so ask the owner to test those.

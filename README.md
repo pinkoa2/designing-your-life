@@ -10,17 +10,7 @@ So far it has the first exercise, **Start Where You Are**: a check-in on Health,
 Work, Play, and Love. Each area is a test tube filled to its score, with a short
 note on why each of us gave it that score.
 
-## Local development
-
-```sh
-npm install
-npm run dev            # http://localhost:5173 (add `-- --host` to open it on a phone)
-npm run build          # static site in build/
-npm run check          # type-check
-```
-
-Built with SvelteKit 3 and Svelte 5, prerendered to static HTML with
-`@sveltejs/adapter-static`.
+Built with SvelteKit 3 and Svelte 5, prerendered to static HTML.
 
 ## Accounts and answers
 

@@ -8,23 +8,23 @@ web
 
 ## Stack
 
-SvelteKit 3 + Svelte 5 with adapter-static, so every page is prerendered to plain HTML (the owner's choice, 2026-10-04, replacing plain HTML/CSS). Content lives in files under `src/lib/content/`, which Claude edits from chat. Shared pieces are Svelte components under `src/lib/components/`. Commands: `npm run dev` (localhost:5173), `npm run build` (output in `build/`), `npm run check`. Open decision: whether future exercises get their own pages or share one scrolling page. One page per exercise plus a home page was proposed but not confirmed.
+SvelteKit 3 + Svelte 5 with adapter-static, so every page is prerendered to plain HTML and hosted on GitHub Pages (the owner's choice, 2026-10-04, replacing plain HTML/CSS). Answers and accounts live in Supabase (free plan, US East); the browser talks to it directly with the public key. Shared pieces are Svelte components under `src/lib/components/`. Each exercise gets its own page, listed on a contents page at `/` (decided). Commands: `npm run dev` (localhost:5173), `npm run build` (output in `build/`), `npm run check`.
 
 ## Users
 
-The owner, one person working through _Designing Your Life_ (Bill Burnett & Dave Evans). They want a place where their exercise answers live and look good. They may show it to a few people: a partner, a friend, a coach, or a reading group. It is not public. The owner checks it on laptop and phone equally.
+The owner (Alex) and their girlfriend Ting, working through _Designing Your Life_ (Bill Burnett & Dave Evans) together: Alex in Boston, Ting in Taiwan. Each keeps their own answers and shares a link with the other, and with anyone else they choose. Accounts are invite-only, but could expand to more people later. Both use it on laptop and phone.
 
 ## Product Purpose
 
-The site presents the owner's own answers to the book's exercises. It starts with "Start Where You Are": the Health / Work / Play / Love dashboard. Each area gets a 0–100% gauge score and a short note explaining the score. Together they show where the owner most needs work. Success means the owner opens it and wants to keep it, and isn't embarrassed to show it to someone.
+Each person records and shares their own answers to the book's exercises. It starts with "Start Where You Are": the Health / Work / Play / Love dashboard. Each area gets a 0–100% gauge score and a short note explaining the score. Together they show where that person most needs work. Success means they open it, want to keep it up, and are happy to share their link.
 
 ## Positioning
 
-It is a personal, read-only record of one person's life-design check-in. It is not a template, a tool for others, or a habit tracker.
+A small, personal, shareable record of a couple's life-design work through one book. It is not a public directory or a social network (dashboards are reachable only by shared link), and it is not a habit tracker.
 
 ## Operating Context
 
-The owner gives answers by talking them through in conversation with Claude. Claude then edits the content file and the page shows the result. The site itself has no editing, forms, inputs, or saving. Further book chapters (for example Workview/Lifeview and the Good Time Journal) may be added later as new sections, but only when the owner asks.
+Each person signs in with an emailed link and edits their own dashboard on the page itself. Everyone else, signed in or not, sees it read-only through a `?u=<id>` share link that stays with them as they browse that person's pages. The site is public by the owner's choice, with no privacy needs beyond unguessable links. Claude can still help word a note in chat, but the answers are saved through the site, not in files. Further book chapters (for example Workview/Lifeview and the Good Time Journal) get their own pages, but only when the owner asks.
 
 ## Capabilities and Constraints
 
@@ -35,11 +35,12 @@ The owner gives answers by talking them through in conversation with Claude. Cla
 
 ## Evidence on Hand
 
-None yet. Scores and notes are placeholders and must be clearly replaceable. Never invent real-sounding personal answers.
+Real answers live in Supabase, entered by each person. The owner's first answers are also kept in `answers.json`. A new dashboard shows defaults (25/50/75/100) with writing prompts; never invent real-sounding personal answers.
 
 ## Product Principles
 
-1. The owner's words come first. The page exists to frame what they said, not to explain the book.
+1. Each person's words come first. The page exists to frame what they said, not to explain the book.
 2. The gaps should be obvious at a glance. The lowest area should be impossible to miss.
 3. The owner should be comfortable showing it to a friend: personal and candid, never clinical.
-4. Content changes are edits to data, never to layout.
+4. Editing stays inline and light: no separate form screens.
+5. Share by link only; never list or broadcast dashboards.
