@@ -1,0 +1,114 @@
+{
+  "title": "Choose the look for your Start Where You Are page",
+  "question": "The roll dealt Measuring Cups. Keep it, take my pick or the alternate, or re-roll for a new hand (safer or bolder).",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Measuring Cups",
+      "kicker": "THE ROLL",
+      "lineage": "Glass kitchen measuring jugs with red printed graduations, and the idea of filling your cup",
+      "thesis": "Health, Work, Play and Love as four glass measuring cups, each filled to your score.",
+      "palette": ["#F2F6F7", "#D62B22", "#7DBE3C", "#5A3420", "#FF8A1E", "#C2185B"],
+      "materials": ["clear glass with red printed graduation marks", "four different drinks: green juice, coffee, orange soda, berry", "a strip of masking tape with a handwritten label"],
+      "viewport": "Four tall cups in a row on a cool white counter. Each liquid sits at its % with the red tick marks beside it. Under each cup is its area name, a large score, and your note in a calm column. On a phone the cups become one horizontal shelf you can swipe.",
+      "risk": "It could feel kitschy if the cups are drawn cutesy instead of precise like real lab glass; the kitchen idea also has nothing to do with the book itself.",
+      "raised": [
+        {"from": "Film cutting bench", "raise": "The lowest cup carries a physical mark, a folded tape flag reading 'start here', so the biggest gap is a mark rather than just a color."},
+        {"from": "Darkroom exposure record", "raise": "All four cups share one 0–100 ruler in steps of 10 as their only scale, so they compare honestly side by side."},
+        {"from": "Theater cyclorama", "raise": "Each fill level also gets a written label, like 'a splash', 'half full', or 'brimming', so the reading never depends on color alone."},
+        {"from": "Sneaker box wall", "raise": "Every cup has the same label layout (area, score, note), like a printed end label."}
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "Paint Chip Cards",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "Hardware-store paint swatch strips, light to deep in one hue",
+      "thesis": "Each area is a paint strip of ten chips, colored in up to your score and named like a paint color.",
+      "palette": ["#FFFFFF", "#1A1A1A", "#FF6B4A", "#2F6BFF", "#F7C531", "#1FA37A"],
+      "materials": ["matte card stock", "a punched hole at the top", "chip names in small caps"],
+      "viewport": "Four tall swatch strips fanned slightly. Each has ten chips, colored in up to the score with the rest left blank. A paint-style name for the level and your note sit on the strip's white base.",
+      "risk": "This is my top pick, and paint-swatch styling is a familiar 'fun' move; it lands well, but it's less surprising.",
+      "case": "Four hues for four areas, and a light-to-deep ladder is a natural 0–100 gauge."
+    },
+    {
+      "id": "challenger-yeye",
+      "label": "Pop Record Sleeve",
+      "verdict": "competitive",
+      "lineage": "1960s French yé-yé record sleeves",
+      "thesis": "Your check-in as a four-track EP, with each area a track on a flat, saturated sleeve.",
+      "palette": ["#F26B1D", "#18B5B0", "#FFFFFF", "#1E1A17"],
+      "materials": ["flat saturated ink", "a rounded pop logotype", "a small, tidy track list"],
+      "viewport": "A flat tangerine field with a rounded logotype 'Start Where You Are', and four track lines tucked into a corner, sorted by score. Choosing a track cross-fades the background to that area's color and shows its note.",
+      "case": "Four tracks is a closed set of four, which fits the four areas well. It's very fun, but the score is just a number, so the gauge is weaker.",
+      "risk": "Notes are revealed one at a time, so you can't take in all four at a glance."
+    },
+    {
+      "id": "challenger-cyc",
+      "label": "Theater Cyclorama Dawn",
+      "verdict": "declined",
+      "lineage": "Stage lighting moving from night to day",
+      "palette": ["#0A0A10", "#1F3FBF", "#E86A8C", "#FFFFFF"],
+      "materials": ["light on a curved wall"],
+      "thesis": "Each score as a phase of dawn.",
+      "viewport": "Horizon bands from dark to light.",
+      "risk": "Moody rather than fun.",
+      "case": "Too moody for 'clean but fun'.",
+      "kept": "Written level labels so color is never the only signal.",
+      "hero": "https://impeccable.style/worlds/cards/stagecraft-theater-lighting-cyclorama-dawn-hero.webp"
+    },
+    {
+      "id": "challenger-sneaker",
+      "label": "Sneaker Box Wall",
+      "verdict": "declined",
+      "lineage": "Stacked shoe boxes with end labels",
+      "palette": ["#D9692B", "#111111", "#F7F5F0"],
+      "materials": ["box board", "tissue paper"],
+      "thesis": "Four boxes; lift the lid to read a note.",
+      "viewport": "A stack of boxes showing their end labels.",
+      "risk": "Notes are hidden behind lids.",
+      "case": "Hiding the notes hurts reading at a glance.",
+      "kept": "One shared label layout for every area.",
+      "hero": "https://impeccable.style/worlds/cards/textiles-weave-drape-fashion-sneaker-box-stacks-hero.webp"
+    },
+    {
+      "id": "challenger-darkroom",
+      "label": "Darkroom Exposure Record",
+      "verdict": "declined",
+      "lineage": "Photo printer's record cards",
+      "palette": ["#1C1C1C", "#8A8A8A", "#E0E0E0", "#D0218A"],
+      "materials": ["tracing paper", "hatching"],
+      "thesis": "Scores as exposure zones.",
+      "viewport": "Overlapping translucent sheets.",
+      "risk": "Technical and cold.",
+      "case": "Too technical; not fun.",
+      "kept": "One shared tonal ruler as the only scale.",
+      "hero": "https://impeccable.style/worlds/cards/operate-b-exposure-record-zone-sheets-hero.webp"
+    },
+    {
+      "id": "challenger-bench",
+      "label": "Film Cutting Bench",
+      "verdict": "declined",
+      "lineage": "Film editor's work print rail",
+      "palette": ["#0B0B0B", "#FF6A13", "#FFFFFF"],
+      "materials": ["film grain", "tape flags"],
+      "thesis": "Areas as frames along a rail.",
+      "viewport": "A perforated strip across the page.",
+      "risk": "Built for a workflow you don't have.",
+      "case": "It's a tool, not a reflection.",
+      "kept": "State shown as a mark: a 'start here' flag on the lowest area.",
+      "hero": "https://impeccable.style/worlds/cards/operate-a-cutting-bench-select-rail-hero.webp"
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "canon": true,
+  "canonCard": {
+    "label": "Standard dashboard",
+    "thesis": "A clean wellness dashboard: four cards with ring gauges, done well.",
+    "palette": ["#FFFFFF", "#111827", "#2563EB", "#F3F4F6"],
+    "materials": ["clean grid", "ring progress gauges"],
+    "viewport": "A header, then a 2×2 grid of cards, each with a ring gauge, a %, and a note.",
+    "risk": "It looks like every app dashboard; it's clean, but probably not 'fun'."
+  },
+  "steer": true
+}

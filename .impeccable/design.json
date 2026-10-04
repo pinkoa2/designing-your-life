@@ -1,0 +1,983 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-04T15:44:57Z",
+  "title": "Design System: Designing Your Life",
+  "extensions": {
+    "colorMeta": {
+      "wall": {
+        "role": "neutral",
+        "displayName": "Cool Pale Wall",
+        "canonical": "#e9ecee",
+        "tonalRamp": [
+          "#1b1a22",
+          "#2f2e38",
+          "#4a4955",
+          "#6b6a76",
+          "#8e8d99",
+          "#b8bbc3",
+          "#d6dadd",
+          "#e9ecee",
+          "#f5f6f7",
+          "#ffffff"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Bench White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#1b1a22",
+          "#2f2e38",
+          "#4a4955",
+          "#6b6a76",
+          "#8e8d99",
+          "#b8bbc3",
+          "#d6dadd",
+          "#e9ecee",
+          "#f5f6f7",
+          "#ffffff"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Lab Ink",
+        "canonical": "#1b1a22",
+        "tonalRamp": [
+          "#1b1a22",
+          "#2f2e38",
+          "#4a4955",
+          "#6b6a76",
+          "#8e8d99",
+          "#b8bbc3",
+          "#d6dadd",
+          "#e9ecee",
+          "#f5f6f7",
+          "#ffffff"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "#4a4955",
+        "tonalRamp": [
+          "#1b1a22",
+          "#2f2e38",
+          "#4a4955",
+          "#6b6a76",
+          "#8e8d99",
+          "#b8bbc3",
+          "#d6dadd",
+          "#e9ecee",
+          "#f5f6f7",
+          "#ffffff"
+        ]
+      },
+      "ink-faint": {
+        "role": "neutral",
+        "displayName": "Faint Ink",
+        "canonical": "#8e8d99",
+        "tonalRamp": [
+          "#1b1a22",
+          "#2f2e38",
+          "#4a4955",
+          "#6b6a76",
+          "#8e8d99",
+          "#b8bbc3",
+          "#d6dadd",
+          "#e9ecee",
+          "#f5f6f7",
+          "#ffffff"
+        ]
+      },
+      "health-1": {
+        "role": "primary",
+        "displayName": "Health Green 1",
+        "canonical": "#d2fbe9",
+        "tonalRamp": [
+          "#033b2a",
+          "#0b4d39",
+          "#1a5c45",
+          "#0a7254",
+          "#0f7e5c",
+          "#2cb589",
+          "#55c99e",
+          "#7edbb5",
+          "#a8ecce",
+          "#d2fbe9"
+        ]
+      },
+      "health-2": {
+        "role": "primary",
+        "displayName": "Health Green 2",
+        "canonical": "#a8ecce",
+        "tonalRamp": [
+          "#033b2a",
+          "#0b4d39",
+          "#1a5c45",
+          "#0a7254",
+          "#0f7e5c",
+          "#2cb589",
+          "#55c99e",
+          "#7edbb5",
+          "#a8ecce",
+          "#d2fbe9"
+        ]
+      },
+      "health-3": {
+        "role": "primary",
+        "displayName": "Health Green 3",
+        "canonical": "#7edbb5",
+        "tonalRamp": [
+          "#033b2a",
+          "#0b4d39",
+          "#1a5c45",
+          "#0a7254",
+          "#0f7e5c",
+          "#2cb589",
+          "#55c99e",
+          "#7edbb5",
+          "#a8ecce",
+          "#d2fbe9"
+        ]
+      },
+      "health-4": {
+        "role": "primary",
+        "displayName": "Health Green 4",
+        "canonical": "#55c99e",
+        "tonalRamp": [
+          "#033b2a",
+          "#0b4d39",
+          "#1a5c45",
+          "#0a7254",
+          "#0f7e5c",
+          "#2cb589",
+          "#55c99e",
+          "#7edbb5",
+          "#a8ecce",
+          "#d2fbe9"
+        ]
+      },
+      "health-5": {
+        "role": "primary",
+        "displayName": "Health Green 5",
+        "canonical": "#2cb589",
+        "tonalRamp": [
+          "#033b2a",
+          "#0b4d39",
+          "#1a5c45",
+          "#0a7254",
+          "#0f7e5c",
+          "#2cb589",
+          "#55c99e",
+          "#7edbb5",
+          "#a8ecce",
+          "#d2fbe9"
+        ]
+      },
+      "health-6": {
+        "role": "primary",
+        "displayName": "Health Green 6",
+        "canonical": "#0f7e5c",
+        "tonalRamp": [
+          "#033b2a",
+          "#0b4d39",
+          "#1a5c45",
+          "#0a7254",
+          "#0f7e5c",
+          "#2cb589",
+          "#55c99e",
+          "#7edbb5",
+          "#a8ecce",
+          "#d2fbe9"
+        ]
+      },
+      "health-7": {
+        "role": "primary",
+        "displayName": "Health Green 7",
+        "canonical": "#0a7254",
+        "tonalRamp": [
+          "#033b2a",
+          "#0b4d39",
+          "#1a5c45",
+          "#0a7254",
+          "#0f7e5c",
+          "#2cb589",
+          "#55c99e",
+          "#7edbb5",
+          "#a8ecce",
+          "#d2fbe9"
+        ]
+      },
+      "health-8": {
+        "role": "primary",
+        "displayName": "Health Green 8",
+        "canonical": "#1a5c45",
+        "tonalRamp": [
+          "#033b2a",
+          "#0b4d39",
+          "#1a5c45",
+          "#0a7254",
+          "#0f7e5c",
+          "#2cb589",
+          "#55c99e",
+          "#7edbb5",
+          "#a8ecce",
+          "#d2fbe9"
+        ]
+      },
+      "health-9": {
+        "role": "primary",
+        "displayName": "Health Green 9",
+        "canonical": "#0b4d39",
+        "tonalRamp": [
+          "#033b2a",
+          "#0b4d39",
+          "#1a5c45",
+          "#0a7254",
+          "#0f7e5c",
+          "#2cb589",
+          "#55c99e",
+          "#7edbb5",
+          "#a8ecce",
+          "#d2fbe9"
+        ]
+      },
+      "health-10": {
+        "role": "primary",
+        "displayName": "Health Green 10",
+        "canonical": "#033b2a",
+        "tonalRamp": [
+          "#033b2a",
+          "#0b4d39",
+          "#1a5c45",
+          "#0a7254",
+          "#0f7e5c",
+          "#2cb589",
+          "#55c99e",
+          "#7edbb5",
+          "#a8ecce",
+          "#d2fbe9"
+        ]
+      },
+      "work-1": {
+        "role": "primary",
+        "displayName": "Work Blue 1",
+        "canonical": "#eaf0fd",
+        "tonalRamp": [
+          "#0f2a70",
+          "#1c3a85",
+          "#26489b",
+          "#2855cb",
+          "#2f66f2",
+          "#6997fe",
+          "#89aefe",
+          "#a9c5fe",
+          "#cadbfd",
+          "#eaf0fd"
+        ]
+      },
+      "work-2": {
+        "role": "primary",
+        "displayName": "Work Blue 2",
+        "canonical": "#cadbfd",
+        "tonalRamp": [
+          "#0f2a70",
+          "#1c3a85",
+          "#26489b",
+          "#2855cb",
+          "#2f66f2",
+          "#6997fe",
+          "#89aefe",
+          "#a9c5fe",
+          "#cadbfd",
+          "#eaf0fd"
+        ]
+      },
+      "work-3": {
+        "role": "primary",
+        "displayName": "Work Blue 3",
+        "canonical": "#a9c5fe",
+        "tonalRamp": [
+          "#0f2a70",
+          "#1c3a85",
+          "#26489b",
+          "#2855cb",
+          "#2f66f2",
+          "#6997fe",
+          "#89aefe",
+          "#a9c5fe",
+          "#cadbfd",
+          "#eaf0fd"
+        ]
+      },
+      "work-4": {
+        "role": "primary",
+        "displayName": "Work Blue 4",
+        "canonical": "#89aefe",
+        "tonalRamp": [
+          "#0f2a70",
+          "#1c3a85",
+          "#26489b",
+          "#2855cb",
+          "#2f66f2",
+          "#6997fe",
+          "#89aefe",
+          "#a9c5fe",
+          "#cadbfd",
+          "#eaf0fd"
+        ]
+      },
+      "work-5": {
+        "role": "primary",
+        "displayName": "Work Blue 5",
+        "canonical": "#6997fe",
+        "tonalRamp": [
+          "#0f2a70",
+          "#1c3a85",
+          "#26489b",
+          "#2855cb",
+          "#2f66f2",
+          "#6997fe",
+          "#89aefe",
+          "#a9c5fe",
+          "#cadbfd",
+          "#eaf0fd"
+        ]
+      },
+      "work-6": {
+        "role": "primary",
+        "displayName": "Work Blue 6",
+        "canonical": "#2f66f2",
+        "tonalRamp": [
+          "#0f2a70",
+          "#1c3a85",
+          "#26489b",
+          "#2855cb",
+          "#2f66f2",
+          "#6997fe",
+          "#89aefe",
+          "#a9c5fe",
+          "#cadbfd",
+          "#eaf0fd"
+        ]
+      },
+      "work-7": {
+        "role": "primary",
+        "displayName": "Work Blue 7",
+        "canonical": "#2855cb",
+        "tonalRamp": [
+          "#0f2a70",
+          "#1c3a85",
+          "#26489b",
+          "#2855cb",
+          "#2f66f2",
+          "#6997fe",
+          "#89aefe",
+          "#a9c5fe",
+          "#cadbfd",
+          "#eaf0fd"
+        ]
+      },
+      "work-8": {
+        "role": "primary",
+        "displayName": "Work Blue 8",
+        "canonical": "#26489b",
+        "tonalRamp": [
+          "#0f2a70",
+          "#1c3a85",
+          "#26489b",
+          "#2855cb",
+          "#2f66f2",
+          "#6997fe",
+          "#89aefe",
+          "#a9c5fe",
+          "#cadbfd",
+          "#eaf0fd"
+        ]
+      },
+      "work-9": {
+        "role": "primary",
+        "displayName": "Work Blue 9",
+        "canonical": "#1c3a85",
+        "tonalRamp": [
+          "#0f2a70",
+          "#1c3a85",
+          "#26489b",
+          "#2855cb",
+          "#2f66f2",
+          "#6997fe",
+          "#89aefe",
+          "#a9c5fe",
+          "#cadbfd",
+          "#eaf0fd"
+        ]
+      },
+      "work-10": {
+        "role": "primary",
+        "displayName": "Work Blue 10",
+        "canonical": "#0f2a70",
+        "tonalRamp": [
+          "#0f2a70",
+          "#1c3a85",
+          "#26489b",
+          "#2855cb",
+          "#2f66f2",
+          "#6997fe",
+          "#89aefe",
+          "#a9c5fe",
+          "#cadbfd",
+          "#eaf0fd"
+        ]
+      },
+      "play-1": {
+        "role": "primary",
+        "displayName": "Play Marigold 1",
+        "canonical": "#fef2e0",
+        "tonalRamp": [
+          "#523602",
+          "#674504",
+          "#7d5507",
+          "#8a5a00",
+          "#9c6600",
+          "#d99500",
+          "#f5b032",
+          "#ffcb73",
+          "#ffe2b0",
+          "#fef2e0"
+        ]
+      },
+      "play-2": {
+        "role": "primary",
+        "displayName": "Play Marigold 2",
+        "canonical": "#ffe2b0",
+        "tonalRamp": [
+          "#523602",
+          "#674504",
+          "#7d5507",
+          "#8a5a00",
+          "#9c6600",
+          "#d99500",
+          "#f5b032",
+          "#ffcb73",
+          "#ffe2b0",
+          "#fef2e0"
+        ]
+      },
+      "play-3": {
+        "role": "primary",
+        "displayName": "Play Marigold 3",
+        "canonical": "#ffcb73",
+        "tonalRamp": [
+          "#523602",
+          "#674504",
+          "#7d5507",
+          "#8a5a00",
+          "#9c6600",
+          "#d99500",
+          "#f5b032",
+          "#ffcb73",
+          "#ffe2b0",
+          "#fef2e0"
+        ]
+      },
+      "play-4": {
+        "role": "primary",
+        "displayName": "Play Marigold 4",
+        "canonical": "#f5b032",
+        "tonalRamp": [
+          "#523602",
+          "#674504",
+          "#7d5507",
+          "#8a5a00",
+          "#9c6600",
+          "#d99500",
+          "#f5b032",
+          "#ffcb73",
+          "#ffe2b0",
+          "#fef2e0"
+        ]
+      },
+      "play-5": {
+        "role": "primary",
+        "displayName": "Play Marigold 5",
+        "canonical": "#d99500",
+        "tonalRamp": [
+          "#523602",
+          "#674504",
+          "#7d5507",
+          "#8a5a00",
+          "#9c6600",
+          "#d99500",
+          "#f5b032",
+          "#ffcb73",
+          "#ffe2b0",
+          "#fef2e0"
+        ]
+      },
+      "play-6": {
+        "role": "primary",
+        "displayName": "Play Marigold 6",
+        "canonical": "#9c6600",
+        "tonalRamp": [
+          "#523602",
+          "#674504",
+          "#7d5507",
+          "#8a5a00",
+          "#9c6600",
+          "#d99500",
+          "#f5b032",
+          "#ffcb73",
+          "#ffe2b0",
+          "#fef2e0"
+        ]
+      },
+      "play-7": {
+        "role": "primary",
+        "displayName": "Play Marigold 7",
+        "canonical": "#8a5a00",
+        "tonalRamp": [
+          "#523602",
+          "#674504",
+          "#7d5507",
+          "#8a5a00",
+          "#9c6600",
+          "#d99500",
+          "#f5b032",
+          "#ffcb73",
+          "#ffe2b0",
+          "#fef2e0"
+        ]
+      },
+      "play-8": {
+        "role": "primary",
+        "displayName": "Play Marigold 8",
+        "canonical": "#7d5507",
+        "tonalRamp": [
+          "#523602",
+          "#674504",
+          "#7d5507",
+          "#8a5a00",
+          "#9c6600",
+          "#d99500",
+          "#f5b032",
+          "#ffcb73",
+          "#ffe2b0",
+          "#fef2e0"
+        ]
+      },
+      "play-9": {
+        "role": "primary",
+        "displayName": "Play Marigold 9",
+        "canonical": "#674504",
+        "tonalRamp": [
+          "#523602",
+          "#674504",
+          "#7d5507",
+          "#8a5a00",
+          "#9c6600",
+          "#d99500",
+          "#f5b032",
+          "#ffcb73",
+          "#ffe2b0",
+          "#fef2e0"
+        ]
+      },
+      "play-10": {
+        "role": "primary",
+        "displayName": "Play Marigold 10",
+        "canonical": "#523602",
+        "tonalRamp": [
+          "#523602",
+          "#674504",
+          "#7d5507",
+          "#8a5a00",
+          "#9c6600",
+          "#d99500",
+          "#f5b032",
+          "#ffcb73",
+          "#ffe2b0",
+          "#fef2e0"
+        ]
+      },
+      "love-1": {
+        "role": "primary",
+        "displayName": "Love Coral 1",
+        "canonical": "#feece8",
+        "tonalRamp": [
+          "#5f0f07",
+          "#7a1c12",
+          "#92271a",
+          "#ae2716",
+          "#c93a20",
+          "#fe6049",
+          "#ff8a76",
+          "#feae9f",
+          "#fecdc4",
+          "#feece8"
+        ]
+      },
+      "love-2": {
+        "role": "primary",
+        "displayName": "Love Coral 2",
+        "canonical": "#fecdc4",
+        "tonalRamp": [
+          "#5f0f07",
+          "#7a1c12",
+          "#92271a",
+          "#ae2716",
+          "#c93a20",
+          "#fe6049",
+          "#ff8a76",
+          "#feae9f",
+          "#fecdc4",
+          "#feece8"
+        ]
+      },
+      "love-3": {
+        "role": "primary",
+        "displayName": "Love Coral 3",
+        "canonical": "#feae9f",
+        "tonalRamp": [
+          "#5f0f07",
+          "#7a1c12",
+          "#92271a",
+          "#ae2716",
+          "#c93a20",
+          "#fe6049",
+          "#ff8a76",
+          "#feae9f",
+          "#fecdc4",
+          "#feece8"
+        ]
+      },
+      "love-4": {
+        "role": "primary",
+        "displayName": "Love Coral 4",
+        "canonical": "#ff8a76",
+        "tonalRamp": [
+          "#5f0f07",
+          "#7a1c12",
+          "#92271a",
+          "#ae2716",
+          "#c93a20",
+          "#fe6049",
+          "#ff8a76",
+          "#feae9f",
+          "#fecdc4",
+          "#feece8"
+        ]
+      },
+      "love-5": {
+        "role": "primary",
+        "displayName": "Love Coral 5",
+        "canonical": "#fe6049",
+        "tonalRamp": [
+          "#5f0f07",
+          "#7a1c12",
+          "#92271a",
+          "#ae2716",
+          "#c93a20",
+          "#fe6049",
+          "#ff8a76",
+          "#feae9f",
+          "#fecdc4",
+          "#feece8"
+        ]
+      },
+      "love-6": {
+        "role": "primary",
+        "displayName": "Love Coral 6",
+        "canonical": "#c93a20",
+        "tonalRamp": [
+          "#5f0f07",
+          "#7a1c12",
+          "#92271a",
+          "#ae2716",
+          "#c93a20",
+          "#fe6049",
+          "#ff8a76",
+          "#feae9f",
+          "#fecdc4",
+          "#feece8"
+        ]
+      },
+      "love-7": {
+        "role": "primary",
+        "displayName": "Love Coral 7",
+        "canonical": "#ae2716",
+        "tonalRamp": [
+          "#5f0f07",
+          "#7a1c12",
+          "#92271a",
+          "#ae2716",
+          "#c93a20",
+          "#fe6049",
+          "#ff8a76",
+          "#feae9f",
+          "#fecdc4",
+          "#feece8"
+        ]
+      },
+      "love-8": {
+        "role": "primary",
+        "displayName": "Love Coral 8",
+        "canonical": "#92271a",
+        "tonalRamp": [
+          "#5f0f07",
+          "#7a1c12",
+          "#92271a",
+          "#ae2716",
+          "#c93a20",
+          "#fe6049",
+          "#ff8a76",
+          "#feae9f",
+          "#fecdc4",
+          "#feece8"
+        ]
+      },
+      "love-9": {
+        "role": "primary",
+        "displayName": "Love Coral 9",
+        "canonical": "#7a1c12",
+        "tonalRamp": [
+          "#5f0f07",
+          "#7a1c12",
+          "#92271a",
+          "#ae2716",
+          "#c93a20",
+          "#fe6049",
+          "#ff8a76",
+          "#feae9f",
+          "#fecdc4",
+          "#feece8"
+        ]
+      },
+      "love-10": {
+        "role": "primary",
+        "displayName": "Love Coral 10",
+        "canonical": "#5f0f07",
+        "tonalRamp": [
+          "#5f0f07",
+          "#7a1c12",
+          "#92271a",
+          "#ae2716",
+          "#c93a20",
+          "#fe6049",
+          "#ff8a76",
+          "#feae9f",
+          "#fecdc4",
+          "#feece8"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page title, top left. One per page."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Score numeral under each gauge, with a small top-aligned percent sign."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Area name under each gauge."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Summary line naming most room to grow and strongest; areas in 800."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Area notes and running prose."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Colophon, in Soft Ink."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase area name heading each note, led by its area swatch."
+      }
+    },
+    "shadows": [
+      {
+        "name": "object",
+        "value": "0 1px 1px rgb(27 26 34 / 0.06), 0 10px 24px -12px rgb(27 26 34 / 0.28)",
+        "purpose": "Every white object on the wall: rack bar, posts, base."
+      },
+      {
+        "name": "sticker",
+        "value": "0 2px 3px rgb(27 26 34 / 0.18), 0 8px 16px -6px rgb(27 26 34 / 0.35)",
+        "purpose": "The Start-here sticker, lifted slightly above the rack."
+      },
+      {
+        "name": "contact",
+        "value": "radial-gradient(closest-side, rgb(27 26 34 / 0.22), transparent)",
+        "purpose": "8px elliptical contact shadow where a tube's round bottom meets the base."
+      }
+    ],
+    "motion": [
+      {
+        "name": "tube-drop",
+        "value": "700ms cubic-bezier(0.16, 1, 0.3, 1), from translateY(-48px), 150ms + 110ms stagger",
+        "purpose": "Each tube drops into the rack on load."
+      },
+      {
+        "name": "liquid-fill",
+        "value": "1600ms cubic-bezier(0.25, 1, 0.5, 1), from empty, 800ms + 140ms stagger",
+        "purpose": "Liquid rises from empty to its score after the drop."
+      },
+      {
+        "name": "slosh",
+        "value": "7s linear infinite (front), 11s linear infinite reverse (back), translateX(-60 units)",
+        "purpose": "Continuous gentle surface waves."
+      },
+      {
+        "name": "bubble-rise",
+        "value": "4.2s / 5.6s / 6.8s linear infinite",
+        "purpose": "Slow white bubbles rising through liquid deeper than 24 units."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "No drop, fill, slosh or bubbles; still surface with a slight concave meniscus."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "tablet",
+        "value": "1039px"
+      },
+      {
+        "name": "phone",
+        "value": "719px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Test Tube Gauge",
+      "kind": "custom",
+      "refersTo": "test-tube",
+      "description": "Continuous-fill gauge for a 0 to 100 score; liquid step 5 to 7, empty glass a 14% wash of step 4. No ticks or level names. Shown here as Health at 58%, still surface.",
+      "html": "<div class=\"ds-gauge\" role=\"meter\" aria-valuemin=\"0\" aria-valuemax=\"100\" aria-valuenow=\"58\" aria-valuetext=\"58% full\"><svg class=\"ds-tube\" viewBox=\"0 0 64 220\" aria-hidden=\"true\"><defs><clipPath id=\"ds-in\"><path d=\"M15.5,10 L15.5,190 A16.5,16.5 0 0 0 48.5,190 L48.5,10 Z\"/></clipPath><linearGradient id=\"ds-liq\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#2cb589\"/><stop offset=\"1\" stop-color=\"#0a7254\"/></linearGradient></defs><g clip-path=\"url(#ds-in)\"><rect width=\"64\" height=\"220\" fill=\"color-mix(in oklch, #55c99e 14%, white)\"/><path d=\"M-4,98.7 Q32,103.7 68,98.7 L68,240 L-4,240 Z\" fill=\"url(#ds-liq)\"/></g><path class=\"ds-tube-shine\" d=\"M21,26 L21,184\"/><path class=\"ds-tube-wall\" d=\"M12,9 L12,190 A20,20 0 0 0 52,190 L52,9\"/><path class=\"ds-tube-lip\" d=\"M7,8 L57,8\"/></svg></div>",
+      "css": ".ds-gauge { display: inline-block; padding: 16px; background: #e9ecee; } .ds-tube { display: block; width: 72px; height: auto; overflow: visible; } .ds-tube-wall, .ds-tube-lip { fill: none; stroke: rgb(27 26 34 / 0.24); stroke-linecap: round; stroke-linejoin: round; } .ds-tube-wall { stroke-width: 3; } .ds-tube-lip { stroke-width: 4.5; } .ds-tube-shine { fill: none; stroke: rgb(255 255 255 / 0.6); stroke-width: 3.5; stroke-linecap: round; }"
+    },
+    {
+      "name": "Rack",
+      "kind": "custom",
+      "refersTo": "rack-part",
+      "description": "White bar, posts and base with the Object shadow, all sitting behind the tubes so no level is covered.",
+      "html": "<div class=\"ds-rack\"><span class=\"ds-rack-bar\"></span><span class=\"ds-rack-post ds-l\"></span><span class=\"ds-rack-post ds-r\"></span><span class=\"ds-rack-base\"></span><div class=\"ds-rack-slot\"><svg class=\"ds-tube\" viewBox=\"0 0 64 220\" aria-hidden=\"true\"><defs><clipPath id=\"ds-in\"><path d=\"M15.5,10 L15.5,190 A16.5,16.5 0 0 0 48.5,190 L48.5,10 Z\"/></clipPath><linearGradient id=\"ds-liq\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#2cb589\"/><stop offset=\"1\" stop-color=\"#0a7254\"/></linearGradient></defs><g clip-path=\"url(#ds-in)\"><rect width=\"64\" height=\"220\" fill=\"color-mix(in oklch, #55c99e 14%, white)\"/><path d=\"M-4,98.7 Q32,103.7 68,98.7 L68,240 L-4,240 Z\" fill=\"url(#ds-liq)\"/></g><path class=\"ds-tube-shine\" d=\"M21,26 L21,184\"/><path class=\"ds-tube-wall\" d=\"M12,9 L12,190 A20,20 0 0 0 52,190 L52,9\"/><path class=\"ds-tube-lip\" d=\"M7,8 L57,8\"/></svg></div></div>",
+      "css": ".ds-rack { position: relative; width: 240px; height: 290px; padding-top: 24px; background: #e9ecee; } .ds-rack-bar, .ds-rack-post, .ds-rack-base { position: absolute; z-index: 0; background: #ffffff; box-shadow: 0 1px 1px rgb(27 26 34 / 0.06), 0 10px 24px -12px rgb(27 26 34 / 0.28); } .ds-rack-bar { top: 74px; left: 12px; right: 12px; height: 18px; border-radius: 6px; } .ds-rack-post { top: 74px; height: 166px; width: 12px; border-radius: 4px; } .ds-l { left: 24px; } .ds-r { right: 24px; } .ds-rack-base { top: 262px; left: 4px; right: 4px; height: 20px; border-radius: 8px; } .ds-rack-slot { position: relative; z-index: 1; width: 72px; margin: 0 auto; } .ds-tube { display: block; width: 72px; height: auto; overflow: visible; } .ds-tube-wall, .ds-tube-lip { fill: none; stroke: rgb(27 26 34 / 0.24); stroke-linecap: round; stroke-linejoin: round; } .ds-tube-wall { stroke-width: 3; } .ds-tube-lip { stroke-width: 4.5; } .ds-tube-shine { fill: none; stroke: rgb(255 255 255 / 0.6); stroke-width: 3.5; stroke-linecap: round; }"
+    },
+    {
+      "name": "Score Label",
+      "kind": "custom",
+      "refersTo": "test-tube",
+      "description": "Area name (Title) over a big tabular score numeral (Headline) with a small top-aligned percent sign, centered under each gauge.",
+      "html": "<div class=\"ds-score-label\"><h2 class=\"ds-area\">Health</h2><p class=\"ds-score\"><span class=\"ds-num\">58</span><span class=\"ds-pct\">%</span></p></div>",
+      "css": ".ds-score-label { text-align: center; color: #1b1a22; font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; } .ds-area { margin: 0; font-size: 1.5rem; font-weight: 800; line-height: 1; letter-spacing: -0.02em; } .ds-score { margin: 6px 0 0; display: flex; justify-content: center; align-items: flex-start; font-weight: 800; line-height: 0.85; letter-spacing: -0.04em; font-variant-numeric: tabular-nums lining-nums; } .ds-num { font-size: 3.75rem; } .ds-pct { font-size: 1.25rem; margin-left: 2px; letter-spacing: 0; }"
+    },
+    {
+      "name": "Start-here Sticker",
+      "kind": "custom",
+      "refersTo": "start-sticker",
+      "description": "Round Lab Ink disc, tilted, marking the lowest area beside its tube's lip; never over the glass.",
+      "html": "<span class=\"ds-sticker\">Start<br>here</span>",
+      "css": ".ds-sticker { display: inline-grid; place-items: center; width: 66px; height: 66px; border-radius: 50%; background: #1b1a22; color: #ffffff; font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; font-size: 0.8125rem; font-weight: 800; line-height: 1.05; text-align: center; text-transform: uppercase; letter-spacing: 0.04em; transform: rotate(-12deg); box-shadow: 0 2px 3px rgb(27 26 34 / 0.18), 0 8px 16px -6px rgb(27 26 34 / 0.35); }"
+    },
+    {
+      "name": "Placeholder Chip",
+      "kind": "chip",
+      "refersTo": "placeholder-chip",
+      "description": "Play 2 pill with Play 9 text, shown in the masthead only while content is placeholder.",
+      "html": "<span class=\"ds-chip\">Placeholder scores</span>",
+      "css": ".ds-chip { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #ffe2b0; color: #674504; font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }"
+    },
+    {
+      "name": "Area Note",
+      "kind": "card",
+      "refersTo": "note-head",
+      "description": "One area's explanation: uppercase area name led by a 10px step-6 swatch, then body prose. No container; sits on the wall.",
+      "html": "<div class=\"ds-note\"><p class=\"ds-note-head\">Health</p><p class=\"ds-note-body\">A few sentences, in the owner's words, on why this area got its score.</p></div>",
+      "css": ".ds-note { max-width: 240px; color: #1b1a22; font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; } .ds-note-head { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; } .ds-note-head::before { content: ''; width: 10px; height: 10px; border-radius: 2px; background: #0f7e5c; } .ds-note-body { margin: 0; font-size: 16px; line-height: 1.55; }"
+    },
+    {
+      "name": "Masthead",
+      "kind": "custom",
+      "refersTo": "display",
+      "description": "Heavy display title with the lede, summary line, and check-in meta beside it on the shared measure.",
+      "html": "<header class=\"ds-mast\"><h1 class=\"ds-title\">Start Where You&nbsp;Are</h1><div><p class=\"ds-lede\">A check-in on Health, Work, Play and Love, from <cite>Designing Your Life</cite>.</p><p class=\"ds-summary\">Most room to grow: <strong>Play</strong>, at 27%.</p></div></header>",
+      "css": ".ds-mast { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px 40px; align-items: end; color: #1b1a22; font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; } .ds-title { margin: 0; font-size: 3.5rem; font-weight: 800; line-height: 0.92; letter-spacing: -0.018em; } .ds-lede { margin: 0 0 14px; font-size: 1.0625rem; color: #4a4955; } .ds-summary { margin: 0; font-size: 1.25rem; line-height: 1.35; font-weight: 500; } .ds-summary strong { font-weight: 800; } .ds-mast a:focus-visible, .ds-mast :focus-visible { outline: 2px solid #2f66f2; outline-offset: 3px; border-radius: 4px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Specimen Rack",
+    "overview": "Every life area is a specimen: a clean glass test tube standing in one white lab rack against a cool pale wall, filled with its own color to exactly its score. The world is a tidy, well-lit bench, not a lab report. It is clean but fun: flat white objects with soft shadows, saturated liquids that slosh and bubble, one heavy grotesque doing all the talking, and a round black sticker that says where to start. Nothing on the page asks for input; it only shows.\n\nDensity is low and the page reads in one pass: a heavy title and a short summary, then the rack, then one note per area. Every block shares a single measure so left edges line up. Color comes only from the four area ladders; everything else is wall, white, and ink. Hierarchy comes from weight and size inside one family, never from extra faces or decoration.\n\nTwo directions were explicitly rejected by the owner and stay rejected: a form-based app (inputs, autosave, chapter nav), and a cream-paper editorial look (serif type, a centered card, inline rating meters).",
+    "keyCharacteristics": [
+      "Cool pale wall, flat white objects, soft diffuse shadows.",
+      "Four owned area hues, each a ten-step ladder from pale tint to deep shade.",
+      "Gauges are liquid in glass: continuous fill, no ticks, no step names.",
+      "One family, Bricolage Grotesque, carrying hierarchy through weight 800 against 400.",
+      "Gentle, physical motion: drop, fill, slosh, rise; still and legible with motion off.",
+      "Display only."
+    ],
+    "rules": [
+      {
+        "name": "The Four Ladders Rule",
+        "body": "Color on the page belongs to Health, Work, Play, or Love, drawn from that area's own ten-step ladder. There is no brand accent and no fifth hue; the wall, white, and ink are the only colorless roles.",
+        "section": "colors"
+      },
+      {
+        "name": "The Step Roles Rule",
+        "body": "Use the ladder by role, not by taste: liquid 5 to 7, back wave 4, empty glass 14% of 4 in white, swatch 6, chip 2 with 9 text. A new surface that needs an area color reaches for one of these roles first.",
+        "section": "colors"
+      },
+      {
+        "name": "The Weight Carries It Rule",
+        "body": "Hierarchy comes from weight 800 against 400 within one family. No second typeface, no serif, no italic display; italic is reserved for book titles in `cite`.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Numbers Rule",
+        "body": "Every score uses tabular figures so numbers sit still when content changes.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Measure Rule",
+        "body": "Every block on a page uses the same measure and gutter, so all left edges line up. A new section joins the measure; it does not invent its own width.",
+        "section": "layout"
+      },
+      {
+        "name": "The Behind-the-Bar Rule",
+        "body": "The rack's top bar, posts and base sit behind the tubes (rack parts at the bottom layer, tubes above, the sticker on top), so no part of the rack ever covers a liquid level. Any new object that shares space with a gauge goes behind it.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Fullness Is the Picture Rule",
+        "body": "A gauge shows fullness visually: continuous fill, with no tick marks, step labels, or per-level names. The only number is the score set under the gauge.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do set every block on the shared 1040px measure and fluid gutter.",
+      "Do show any 0 to 100 score as a continuous fill (the Test Tube Gauge), with the score as one big tabular numeral under it.",
+      "Do keep the four area hues and their ten-step ladders exactly as defined, and use them by step role: liquid 5 to 7, back wave 4, empty wash 14% of 4, swatch 6, chip 2 with 9 text.",
+      "Do keep the rack's bar, posts and base behind the tubes so a level is never covered.",
+      "Do mark the lowest area with the single black Start-here sticker, beside the lip, never over the glass.",
+      "Do render pages as display only, prerendered, with content in `src/lib/content/*.ts` files that Claude edits from chat; a content change is an edit to data, never to layout.",
+      "Do give every animated element a still, fully legible reduced-motion state.",
+      "Do flag placeholder content on screen until the owner's real answers replace it."
+    ],
+    "donts": [
+      "Don't add tick marks, step labels, or per-level names (\"low\", \"thriving\", and so on) to a gauge.",
+      "Don't add forms, inputs, textareas, edit buttons, save states, or any \"fill this in\" UI.",
+      "Don't introduce a fifth hue or a brand accent; color belongs to the four areas.",
+      "Don't let any rack part, sticker, or label overlap a liquid level.",
+      "Don't return to the rejected directions: cream paper, serif editorial type, a centered card, or inline rating meters.",
+      "Don't put white surfaces on white; the wall is pale grey so white objects can stand on it."
+    ]
+  }
+}

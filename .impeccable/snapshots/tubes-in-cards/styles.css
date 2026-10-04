@@ -1,0 +1,361 @@
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("fonts/bricolage-grotesque-latin-wght.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+@property --fill {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+:root {
+  --wall: #e9ecee;
+  --wall-deep: #d7dbdf;
+  --card: #ffffff;
+  --ink: #1b1a22;
+  --ink-soft: #4a4955;
+  --ink-faint: #8e8d99;
+  --hairline: #dcdde3;
+
+  /* Ten-step paint ladders, pale tint (1) to deep shade (10).
+     Steps 1–5 take dark ink, 6–10 take white. */
+  --health-1: #d2fbe9; --health-2: #a8ecce; --health-3: #7edbb5; --health-4: #55c99e; --health-5: #2cb589;
+  --health-6: #0f7e5c; --health-7: #0a7254; --health-8: #1a5c45; --health-9: #0b4d39; --health-10: #033b2a;
+
+  --work-1: #eaf0fd; --work-2: #cadbfd; --work-3: #a9c5fe; --work-4: #89aefe; --work-5: #6997fe;
+  --work-6: #2f66f2; --work-7: #2855cb; --work-8: #26489b; --work-9: #1c3a85; --work-10: #0f2a70;
+
+  --play-1: #fef2e0; --play-2: #ffe2b0; --play-3: #ffcb73; --play-4: #f5b032; --play-5: #d99500;
+  --play-6: #9c6600; --play-7: #8a5a00; --play-8: #7d5507; --play-9: #674504; --play-10: #523602;
+
+  --love-1: #feece8; --love-2: #fecdc4; --love-3: #feae9f; --love-4: #ff8a76; --love-5: #fe6049;
+  --love-6: #c93a20; --love-7: #ae2716; --love-8: #92271a; --love-9: #7a1c12; --love-10: #5f0f07;
+
+  --gutter: clamp(16px, 4vw, 56px);
+  --gap: clamp(14px, 1.8vw, 28px);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --shadow-card: 0 1px 1px rgb(27 26 34 / 0.06), 0 10px 24px -12px rgb(27 26 34 / 0.28);
+  --shadow-lift: 0 2px 3px rgb(27 26 34 / 0.08), 0 22px 40px -16px rgb(27 26 34 / 0.38);
+
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  background: var(--wall);
+  color: var(--ink);
+  scrollbar-color: var(--ink-faint) var(--wall);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--wall);
+  font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--play-3); color: var(--ink); }
+
+:focus-visible {
+  outline: 2px solid var(--work-6);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+cite { font-style: italic; }
+
+/* Masthead ------------------------------------------------------------- */
+
+.masthead {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  align-items: end;
+  gap: var(--gap) calc(var(--gap) * 2);
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: clamp(32px, 6vh, 72px) var(--gutter) clamp(28px, 4.5vh, 52px);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.75rem, 7.2vw, 6rem);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.masthead-side { padding-bottom: 0.4em; }
+
+.lede {
+  margin: 0 0 14px;
+  font-size: 1.0625rem;
+  color: var(--ink-soft);
+  max-width: 40ch;
+}
+
+.summary {
+  margin: 0 0 14px;
+  font-size: 1.25rem;
+  line-height: 1.35;
+  font-weight: 500;
+  max-width: 34ch;
+  text-wrap: pretty;
+}
+
+.summary strong { font-weight: 800; }
+
+.checked {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The rack of strips -------------------------------------------------- */
+
+main {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.rack {
+  list-style: none;
+  margin: 0;
+  padding: 18px 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap);
+  align-items: start;
+}
+
+.strip {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border-radius: 6px;
+  padding: 14px 14px 20px;
+  box-shadow: var(--shadow-card);
+  transform: translateY(var(--lift, 0px)) rotate(var(--tilt, 0deg));
+}
+
+/* At rest the strips stay slightly fanned, like samples spread on a counter. */
+.strip:nth-child(1) { --tilt: -2deg; }
+.strip:nth-child(2) { --tilt: 1.2deg; --lift: 6px; }
+.strip:nth-child(3) { --tilt: -1.4deg; }
+.strip:nth-child(4) { --tilt: 2.2deg; --lift: 4px; }
+
+.strip.is-lowest { --lift: -14px; box-shadow: var(--shadow-lift); z-index: 1; }
+
+.strip-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "hole hole"
+    "area score";
+  align-items: end;
+  column-gap: 8px;
+  padding: 0 4px 14px;
+}
+
+.hole {
+  grid-area: hole;
+  justify-self: center;
+  width: 14px;
+  height: 14px;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  background: var(--wall);
+  box-shadow: inset 0 1.5px 2px rgb(27 26 34 / 0.28);
+}
+
+.area {
+  grid-area: area;
+  margin: 0;
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+
+.score {
+  grid-area: score;
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.score .num { font-size: clamp(2.75rem, 4.4vw, 4rem); }
+.score .pct { font-size: 1.25rem; margin-left: 2px; letter-spacing: 0; }
+
+/* The test tube: one per area, filled to the score. ----------------- */
+
+.tube {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 4px;
+}
+
+.tube-svg {
+  display: block;
+  width: 84px;
+  height: auto;
+  overflow: visible;
+}
+
+.tube-wall,
+.tube-lip {
+  fill: none;
+  stroke: rgb(27 26 34 / 0.24);
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.tube-wall { stroke-width: 3; }
+.tube-lip { stroke-width: 4.5; }
+
+.tube-shine {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.6);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+}
+
+.bubble {
+  fill: rgb(255 255 255 / 0.55);
+  animation: rise 5s linear infinite;
+}
+
+@keyframes rise {
+  0% { transform: translateY(var(--depth)); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(5px); opacity: 0; }
+}
+
+.wave-front { animation: slosh 7s linear infinite; }
+.wave-back { animation: slosh 11s linear infinite reverse; }
+
+@keyframes slosh {
+  to { transform: translateX(-60px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave, .bubble { animation: none; }
+  .bubble { display: none; }
+}
+
+/* The note on the card base. */
+
+.note {
+  padding: 18px 4px 0;
+}
+
+.note p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+/* Sample sticker on the area with the most room to grow. */
+
+.sticker {
+  position: absolute;
+  top: -32px;
+  right: -22px;
+  display: grid;
+  place-items: center;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--card);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  line-height: 1.05;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transform: rotate(-12deg);
+  box-shadow: 0 2px 3px rgb(27 26 34 / 0.18), 0 8px 16px -6px rgb(27 26 34 / 0.35);
+}
+
+/* Colophon */
+
+.colophon {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: clamp(40px, 8vh, 88px) var(--gutter) 40px;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.colophon p { margin: 0 0 4px; }
+
+.noscript { padding: 24px 0; }
+
+/* Tablet: two strips per row. ----------------------------------------- */
+
+@media (max-width: 1039px) {
+  .masthead { grid-template-columns: 1fr; align-items: start; }
+  .rack { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 64px; }
+}
+
+/* Phone: the tube sits beside the heading and note. ---------------- */
+
+@media (max-width: 719px) {
+  .masthead { padding-top: 28px; }
+  .summary { font-size: 1.125rem; }
+
+  .rack { grid-template-columns: 1fr; row-gap: 22px; padding-top: 12px; }
+
+  .strip { padding: 16px 16px 18px; }
+  .strip:nth-child(n), .strip.is-lowest:nth-child(n) { --tilt: 0deg; --lift: 0px; }
+
+  .strip {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    grid-template-areas:
+      "tube head"
+      "tube note";
+    column-gap: 18px;
+    align-items: start;
+  }
+
+  .strip-head {
+    grid-area: head;
+    grid-template-areas: "area score";
+    padding: 2px 0 8px;
+  }
+
+  .tube { grid-area: tube; padding: 2px 0 0; }
+  .tube-svg { width: 52px; }
+  .note { grid-area: note; padding: 0; }
+  .hole { display: none; }
+
+  .sticker { top: -18px; right: auto; left: -10px; width: 58px; height: 58px; font-size: 0.6875rem; }
+}
+
+@media (forced-colors: active) {
+  .wave { fill: CanvasText !important; }
+  .tube-wall, .tube-lip { stroke: CanvasText; }
+}

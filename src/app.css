@@ -1,0 +1,73 @@
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/fonts/bricolage-grotesque-latin-var.woff2") format("woff2");
+  font-weight: 200 800;
+  font-stretch: 75% 100%;
+  font-display: swap;
+}
+
+:root {
+  --wall: #e9ecee;
+  --card: #ffffff;
+  --ink: #1b1a22;
+  --ink-soft: #4a4955;
+  --ink-faint: #8e8d99;
+
+  /* Ten-step ladders per area, pale tint (1) to deep shade (10). */
+  --health-1: #d2fbe9; --health-2: #a8ecce; --health-3: #7edbb5; --health-4: #55c99e; --health-5: #2cb589;
+  --health-6: #0f7e5c; --health-7: #0a7254; --health-8: #1a5c45; --health-9: #0b4d39; --health-10: #033b2a;
+
+  --work-1: #eaf0fd; --work-2: #cadbfd; --work-3: #a9c5fe; --work-4: #89aefe; --work-5: #6997fe;
+  --work-6: #2f66f2; --work-7: #2855cb; --work-8: #26489b; --work-9: #1c3a85; --work-10: #0f2a70;
+
+  --play-1: #fef2e0; --play-2: #ffe2b0; --play-3: #ffcb73; --play-4: #f5b032; --play-5: #d99500;
+  --play-6: #9c6600; --play-7: #8a5a00; --play-8: #7d5507; --play-9: #674504; --play-10: #523602;
+
+  --love-1: #feece8; --love-2: #fecdc4; --love-3: #feae9f; --love-4: #ff8a76; --love-5: #fe6049;
+  --love-6: #c93a20; --love-7: #ae2716; --love-8: #92271a; --love-9: #7a1c12; --love-10: #5f0f07;
+
+  /* One measure for every block on the page, so all left edges line up. */
+  --measure: 1040px;
+  --gutter: clamp(16px, 4vw, 56px);
+  --gap: clamp(14px, 1.8vw, 28px);
+
+  --shadow-card: 0 1px 1px rgb(27 26 34 / 0.06), 0 10px 24px -12px rgb(27 26 34 / 0.28);
+
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  background: var(--wall);
+  color: var(--ink);
+  scrollbar-color: var(--ink-faint) var(--wall);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--wall);
+  font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--play-3); color: var(--ink); }
+
+:focus-visible {
+  outline: 2px solid var(--work-6);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+cite { font-style: italic; }
+
+.measure {
+  max-width: calc(var(--measure) + var(--gutter) * 2);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
