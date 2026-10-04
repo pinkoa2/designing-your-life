@@ -1,16 +1,29 @@
 <script lang="ts">
+  import Arrow from "#lib/components/Arrow.svelte";
   import TopBar from "#lib/components/TopBar.svelte";
+  import { EXAMPLE_ANSWERS } from "#lib/content/example.ts";
   import { sendSignInLink } from "#lib/session.svelte.ts";
 
   let email = $state("");
   let sending = $state(false);
-  let result = $state<{ ok: boolean; message: string } | null>(null);
+  let sentTo = $state("");
+  let error = $state("");
 
   async function submit(event: SubmitEvent) {
     event.preventDefault();
+    const address = email.trim();
+    if (!address) return;
     sending = true;
-    result = await sendSignInLink(email.trim());
+    error = "";
+    const result = await sendSignInLink(address);
     sending = false;
+    if (result.ok) sentTo = address;
+    else error = result.message;
+  }
+
+  function startOver() {
+    sentTo = "";
+    error = "";
   }
 </script>
 
@@ -21,68 +34,79 @@
 
 <TopBar account={false} />
 
-<main class="signin measure">
-  <h1>Sign in</h1>
-  <p class="lede">
-    We'll email you a link that signs you in, with no password. Anyone can view a dashboard you share without
-    signing in.
-  </p>
-
-  {#if result?.ok}
-    <div class="card" role="status">
-      <p class="sent">{result.message}</p>
-      <p class="hint">Open the link on this device. It signs you in and takes you to your dashboard.</p>
+<main class="signin">
+  {#if sentTo}
+    <div role="status">
+      <h1>Check your inbox</h1>
+      <p class="lede">
+        We sent a sign-in link to <strong>{sentTo}</strong>. Open it on this device and it'll take you to
+        your dashboard.
+      </p>
+      <p class="note">It can take a minute to arrive. If it doesn't, look in spam.</p>
+      <button type="button" class="text-button" onclick={startOver}>Use a different email</button>
     </div>
   {:else}
-    <form class="card" onsubmit={submit}>
-      <label for="email">Your email</label>
-      <div class="row">
-        <input
-          id="email"
-          type="email"
-          autocomplete="email"
-          required
-          bind:value={email}
-          placeholder="you@example.com"
-        />
-        <button type="submit" class="pill" disabled={sending}>
-          {sending ? "Sending…" : "Email me a link"}
-        </button>
-      </div>
-      {#if result}<p class="error" role="alert">{result.message}</p>{/if}
-      <p class="hint">Sign-in is invite-only for now.</p>
+    <h1>Sign in</h1>
+    <p class="lede">
+      Keep your answers to <cite>Designing Your Life</cite>, one exercise at a time. We'll email you a
+      link, so there's no password to remember.
+    </p>
+
+    <form onsubmit={submit}>
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        autocomplete="email"
+        required
+        bind:value={email}
+        placeholder="you@example.com"
+        aria-invalid={error ? "true" : undefined}
+        aria-describedby={error ? "email-error" : undefined}
+      />
+      {#if error}
+        <p class="error" id="email-error" role="alert">{error}</p>
+      {/if}
+      <button type="submit" class="send" disabled={sending}>
+        {sending ? "Sending…" : "Email me a sign-in link"}
+      </button>
     </form>
+
+    <p class="note">Accounts are invite-only for now.</p>
   {/if}
+
+  <a class="example" href="/?u={EXAMPLE_ANSWERS}">
+    Just looking? See an example <Arrow />
+  </a>
 </main>
 
 <style>
   .signin {
-    padding-top: clamp(32px, 8vh, 96px);
-    padding-bottom: 64px;
+    width: min(100% - var(--gutter) * 2, 400px);
+    margin: 0 auto;
+    padding: clamp(48px, 12vh, 120px) 0 64px;
   }
+
 
   h1 {
     margin: 0 0 12px;
-    font-size: clamp(2.75rem, 7vw, 5.75rem);
+    font-size: clamp(2.75rem, 7vw, 3.75rem);
     font-weight: 800;
-    line-height: 0.92;
+    line-height: 0.95;
     letter-spacing: -0.018em;
   }
 
   .lede {
     margin: 0 0 28px;
-    max-width: 44ch;
-    font-size: 1.25rem;
-    line-height: 1.4;
+    font-size: 1rem;
+    line-height: 1.5;
     color: var(--ink-soft);
+    text-wrap: pretty;
   }
 
-  .card {
-    max-width: 520px;
-    padding: 20px;
-    border-radius: 8px;
-    background: var(--card);
-    box-shadow: var(--shadow-card);
+  .lede strong {
+    color: var(--ink);
+    overflow-wrap: anywhere;
   }
 
   label {
@@ -94,33 +118,44 @@
     text-transform: uppercase;
   }
 
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
   input {
-    flex: 1 1 220px;
-    min-width: 0;
-    padding: 10px 14px;
-    border: 1.5px solid rgb(27 26 34 / 0.2);
-    border-radius: 999px;
+    display: block;
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 8px;
     background: var(--card);
+    box-shadow: var(--shadow-card);
     color: var(--ink);
     font: inherit;
-  }
-
-  input:focus {
-    outline: 2px solid var(--work-6);
-    outline-offset: 1px;
-    border-color: transparent;
+    font-size: 1rem;
   }
 
   input::placeholder { color: var(--ink-soft); }
 
-  .pill {
-    padding: 10px 18px;
+  input:focus {
+    outline: 2px solid var(--work-6);
+    outline-offset: 2px;
+  }
+
+  input[aria-invalid="true"] {
+    outline: 2px solid var(--love-6);
+    outline-offset: 2px;
+  }
+
+  .error {
+    margin: 10px 0 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--love-7);
+  }
+
+  .send {
+    display: block;
+    width: 100%;
+    height: 48px;
+    margin-top: 12px;
     border: 0;
     border-radius: 999px;
     background: var(--ink);
@@ -131,25 +166,43 @@
     cursor: pointer;
   }
 
-  .pill:hover:not(:disabled) { background: #33313d; }
-  .pill:disabled { opacity: 0.6; cursor: wait; }
+  .send:hover:not(:disabled) { background: #33313d; }
+  .send:disabled { opacity: 0.6; cursor: wait; }
 
-  .sent {
-    margin: 0 0 6px;
-    font-size: 1.25rem;
-    font-weight: 700;
-  }
-
-  .error {
-    margin: 12px 0 0;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--love-7);
-  }
-
-  .hint {
-    margin: 12px 0 0;
+  .note {
+    margin: 14px 0 0;
     font-size: 0.875rem;
     color: var(--ink-soft);
   }
+
+  .text-button {
+    margin-top: 16px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+
+  /* A quiet way out for anyone who just wants to see what this is. */
+  .example {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgb(27 26 34 / 0.12);
+    width: 100%;
+    color: var(--ink);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .example:hover { text-decoration: underline; text-underline-offset: 3px; }
 </style>
