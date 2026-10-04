@@ -42,7 +42,7 @@ export async function sendSignInLink(email: string): Promise<{ ok: boolean; mess
     email,
     options: {
       shouldCreateUser: false,
-      emailRedirectTo: `${location.origin}/start-where-you-are/`,
+      emailRedirectTo: `${location.origin}/`,
     },
   });
   if (!error) return { ok: true, message: `Check ${email} for a sign-in link.` };
