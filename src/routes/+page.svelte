@@ -1,25 +1,34 @@
 <script lang="ts">
   import Arrow from "#lib/components/Arrow.svelte";
   import BookCover from "#lib/components/BookCover.svelte";
+  import MiniCompass from "#lib/components/MiniCompass.svelte";
+  import MiniTubes from "#lib/components/MiniTubes.svelte";
   import TopBar from "#lib/components/TopBar.svelte";
   import { afterNavigate } from "$app/navigation";
   import { exercises } from "#lib/content/exercises.ts";
-  import { checkin } from "#lib/content/start-where-you-are.ts";
-  import { loadDashboard, type Answer } from "#lib/storage.ts";
+  import { loadCompass, loadDashboard, type Answer } from "#lib/storage.ts";
   import { session, shareHome } from "#lib/session.svelte.ts";
   import { viewing, readViewing, withPerson } from "#lib/viewing.svelte.ts";
 
   afterNavigate(readViewing);
 
-  // Whose scores to show on the chapter 1 card: the shared person's, or your own.
+  // Whose answers to preview on the finished cards: the shared person's, or your own.
+  // Chapter 1 shows its four scores; chapter 2 a tiny compass once the needles are set.
   let scores = $state<Answer[] | null>(null);
+  let needles = $state<{ work: number; life: number } | null>(null);
   const scoreOwner = $derived(viewing.checked ? (viewing.name !== null ? viewing.id : (session.user?.id ?? null)) : null);
 
   $effect(() => {
     const id = scoreOwner;
     scores = null;
+    needles = null;
     if (!id) return;
     let current = true;
+    loadCompass(id)
+      .then((c) => {
+        if (current && c && c.work !== null && c.life !== null) needles = { work: c.work, life: c.life };
+      })
+      .catch(() => {});
     loadDashboard(id)
       .then((data) => {
         if (current && data?.answers.length) scores = data.answers;
@@ -44,10 +53,6 @@
     }
   }
 
-  const areaName = (id: string) => checkin.areas.find((a) => a.id === id)?.name ?? id;
-  const ordered = $derived(
-    scores ? checkin.areas.map((a) => scores!.find((s) => s.id === a.id)).filter((s) => s !== undefined) : []
-  );
 
 </script>
 
@@ -104,14 +109,11 @@
                 <span class="chapter">{item.title}</span>
                 {#if item.exercise}<span class="exercise">{item.exercise}</span>{/if}
               </span>
-              {#if item.chapter === 1 && ordered.length}
-                <span class="scores" aria-label="Scores">
-                  {#each ordered as a (a.id)}
-                    <span class="score" style:--swatch="var(--{a.id}-6)">
-                      <span class="visually-hidden">{areaName(a.id)}</span>{a.score}
-                    </span>
-                  {/each}
-                </span>
+              {#if item.chapter === 1 && scores}
+                <span class="scores"><MiniTubes answers={scores} /></span>
+              {/if}
+              {#if item.chapter === 2 && needles}
+                <span class="scores"><MiniCompass work={needles.work} life={needles.life} /></span>
               {/if}
               <span class="go"><Arrow /></span>
             </a>
@@ -306,27 +308,7 @@
 
 
 
-  .scores {
-    display: flex;
-    gap: 10px;
-    font-size: 0.875rem;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .score {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .score::before {
-    content: "";
-    width: 9px;
-    height: 9px;
-    border-radius: 2px;
-    background: var(--swatch);
-  }
+  .scores { display: flex; }
 
   .go {
     font-size: 1.25rem;

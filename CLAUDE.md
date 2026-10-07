@@ -103,8 +103,8 @@ Layout:
   chapters. Finished exercises are white cards; the rest are "Not yet" rows.
 - `src/routes/start-where-you-are/+page.svelte`: picks whose dashboard to show (`?u=`
   person, else your own when signed in, else an example) and renders `Dashboard`.
-- The landing page also shows the chapter 1 card's real scores (for the `?u=` person or
-  you) and, when signed in, a "Your answers · Copy share link" row.
+- The landing page also previews each finished card's real answers (mini tubes, mini compass) for the `?u=` person or
+  you, and, when signed in, shows a "Your answers · Copy share link" row.
 - `src/lib/content/exercises.ts`: the chapter list. Give an exercise an `href` once its
   page exists. The list was written from memory, so check it against the book.
 - Each page builds to its own folder (`trailingSlash = "always"`), so links end in `/`.
@@ -132,6 +132,10 @@ Layout:
   (straight up is right on it); the wedge shows how far apart the two views are. Left or
   right means nothing on its own. The North Star is one line summing up both essays.
   Essays always come before the three questions (the owner's call).
+- **Every finished exercise gets a tiny preview on its contents card** (the owner asked
+  for this on all future exercises): chapter 1 shows four tiny test tubes (`MiniTubes`), chapter 2 a
+  48px `MiniCompass` (just the two needles and a small star). Each shows the `?u=`
+  person's (or your own) real answers, and only once there's something to show.
 - **Landing page:** the book's real cover beside the contents list. On phone, a small
   cover sits beside the intro text; a big left-aligned cover looked off.
 - Rejected before this build: a form app with textareas and autosave, and a

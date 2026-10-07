@@ -277,7 +277,7 @@
       <p class="apart">{editable ? "Your needles aren't set yet." : "Needles not set yet."}</p>
     {/if}
     {#if editable && !editingNeedles}
-      <button type="button" class="pill is-small needle-edit" onclick={editNeedles} disabled={busy}>
+      <button type="button" class="note-edit needle-edit" onclick={editNeedles} disabled={busy}>
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 2.5l3 3-8 8H2.5v-3z" /></svg>
         {unset ? "Set my needles" : "Move my needles"}
       </button>
@@ -424,19 +424,8 @@
 
   .bearing-top .status { margin-right: auto; }
 
-  /* Right under the dial it moves. */
-  .needle-edit { margin-top: 14px; }
-
-  .needle-edit svg {
-    width: 13px;
-    height: 13px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.75;
-    stroke-linejoin: round;
-  }
-
-  .needle-edit:disabled { visibility: hidden; }
+  /* Right under the dial it moves, in the same quiet voice as every Edit. */
+  .needle-edit { margin: 10px 0 0; }
 
   .north-star {
     width: 100%;
