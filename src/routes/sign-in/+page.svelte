@@ -2,9 +2,14 @@
   import Arrow from "#lib/components/Arrow.svelte";
   import TopBar from "#lib/components/TopBar.svelte";
   import { EXAMPLE_ANSWERS } from "#lib/content/example.ts";
-  import { sendSignInLink } from "#lib/session.svelte.ts";
+  import { goto } from "$app/navigation";
+  import { sendSignInLink, signInWithPassword } from "#lib/session.svelte.ts";
 
+  // Password is the usual way in; an emailed link is the backup (Supabase only
+  // sends a couple of those an hour).
+  let mode = $state<"password" | "link">("password");
   let email = $state("");
+  let password = $state("");
   let sending = $state(false);
   let sentTo = $state("");
   let error = $state("");
@@ -15,10 +20,22 @@
     if (!address) return;
     sending = true;
     error = "";
+    if (mode === "password") {
+      const result = await signInWithPassword(address, password);
+      sending = false;
+      if (result.ok) goto("/");
+      else error = result.message;
+      return;
+    }
     const result = await sendSignInLink(address);
     sending = false;
     if (result.ok) sentTo = address;
     else error = result.message;
+  }
+
+  function switchMode() {
+    mode = mode === "password" ? "link" : "password";
+    error = "";
   }
 
   function startOver() {
@@ -48,8 +65,8 @@
   {:else}
     <h1>Sign in</h1>
     <p class="lede">
-      Keep your answers to <cite>Designing Your Life</cite>, one exercise at a time. We'll email you a
-      link, so there's no password to remember.
+      Keep your answers to <cite>Designing Your Life</cite>, one exercise at a time.
+      {#if mode === "link"}We'll email you a link to sign in.{/if}
     </p>
 
     <form onsubmit={submit}>
@@ -62,15 +79,31 @@
         bind:value={email}
         placeholder="you@example.com"
         aria-invalid={error ? "true" : undefined}
-        aria-describedby={error ? "email-error" : undefined}
+        aria-describedby={error ? "signin-error" : undefined}
       />
+      {#if mode === "password"}
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          required
+          bind:value={password}
+          aria-invalid={error ? "true" : undefined}
+          aria-describedby={error ? "signin-error" : undefined}
+        />
+      {/if}
       {#if error}
-        <p class="error" id="email-error" role="alert">{error}</p>
+        <p class="error" id="signin-error" role="alert">{error}</p>
       {/if}
       <button type="submit" class="send" disabled={sending}>
-        {sending ? "Sending…" : "Email me a sign-in link"}
+        {#if mode === "password"}{sending ? "Signing in…" : "Sign in"}{:else}{sending ? "Sending…" : "Email me a sign-in link"}{/if}
       </button>
     </form>
+
+    <button type="button" class="text-button" onclick={switchMode}>
+      {mode === "password" ? "No password yet? Email me a link instead" : "Sign in with a password instead"}
+    </button>
 
     <p class="note">Accounts are invite-only for now.</p>
   {/if}
@@ -131,6 +164,8 @@
     font: inherit;
     font-size: 1rem;
   }
+
+  input + label { margin-top: 16px; }
 
   input::placeholder { color: var(--ink-soft); }
 

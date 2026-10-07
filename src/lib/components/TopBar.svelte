@@ -25,6 +25,7 @@
           <a class="link" href="/">Your answers</a>
         {/if}
         Signed in as <strong>{session.user.name}</strong>
+        <a class="link" href="/password/">Password</a>
         <button type="button" class="link" onclick={signOut}>Sign out</button>
       </span>
     {:else}

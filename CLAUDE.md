@@ -24,8 +24,13 @@ dashboard in the site. Answers live in **Supabase** (project `swulxuvvhociubtwst
 US East), not in content files.
 
 - **Accounts:** invite-only. Sign-up is disabled in Supabase, and people are added in
-  Authentication → Users ("Create new user", auto-confirm). They sign in with an emailed
-  link (`/sign-in/`). There are currently two people: Alex (the owner) and Ting. To set a
+  Authentication → Users ("Create new user", auto-confirm). They sign in with an email and
+  password at `/sign-in/` (added 2026-10-07, because Supabase's emails run out after
+  about 2 an hour). The emailed link is still there as a backup ("Email me a link
+  instead"). Signed-in people set or change their password at `/password/` (linked as
+  "Password" in the top bar). To set one without any email: `update auth.users set
+  encrypted_password = extensions.crypt('…', extensions.gen_salt('bf')) where lower(email)
+  = '…';` There are currently two people: Alex (the owner) and Ting. To set a
   name: `insert into public.profiles (id, display_name) select id, 'Name' from auth.users
   where lower(email) = '…' on conflict (id) do update set display_name =
   excluded.display_name returning *;` (the Users list's own "Display name" column is

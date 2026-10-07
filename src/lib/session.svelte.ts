@@ -55,6 +55,32 @@ export async function sendSignInLink(email: string): Promise<{ ok: boolean; mess
   return { ok: false, message: `Couldn't send the link: ${error.message}` };
 }
 
+/** Sign in with email and password. No email is sent, so there's no hourly limit. */
+export async function signInWithPassword(email: string, password: string): Promise<{ ok: boolean; message: string }> {
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (!error) return { ok: true, message: "" };
+  if (/invalid login credentials/i.test(error.message)) {
+    return { ok: false, message: "That email and password don't match. If you haven't set a password yet, use an email link once and set one." };
+  }
+  if (/rate limit|too many/i.test(error.message)) {
+    return { ok: false, message: "Too many tries just now. Wait a minute and try again." };
+  }
+  return { ok: false, message: `Couldn't sign in: ${error.message}` };
+}
+
+/** Set or change the signed-in person's password. */
+export async function setPassword(password: string): Promise<{ ok: boolean; message: string }> {
+  const { error } = await supabase.auth.updateUser({ password });
+  if (!error) return { ok: true, message: "Password saved. Next time, sign in with it." };
+  if (/reauthenticat|recent/i.test(error.message)) {
+    return { ok: false, message: "For safety, sign in again with an email link, then set your password right away." };
+  }
+  if (/weak|short|at least/i.test(error.message)) {
+    return { ok: false, message: `That password is too weak: ${error.message}` };
+  }
+  return { ok: false, message: `Couldn't save the password: ${error.message}` };
+}
+
 export async function signOut() {
   await supabase.auth.signOut();
   session.user = null;
