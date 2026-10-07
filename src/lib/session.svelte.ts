@@ -63,5 +63,5 @@ export async function signOut() {
 /** The read-only link to a person's contents page, for browsing all their answers. */
 export const shareHome = (id: string) => `${location.origin}/?u=${id}`;
 
-/** The read-only link to a person's dashboard. */
-export const shareLink = (id: string) => `${location.origin}/start-where-you-are/?u=${id}`;
+/** The read-only link to one of a person's exercise pages (their dashboard by default). */
+export const shareLink = (id: string, path = "/start-where-you-are/") => `${location.origin}${path}?u=${id}`;

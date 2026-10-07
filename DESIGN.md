@@ -67,6 +67,24 @@ typography:
     fontWeight: 800
     lineHeight: 1
     letterSpacing: "-0.02em"
+  section:
+    fontFamily: "Bricolage Grotesque, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(2rem, 4.4vw, 3.25rem)"
+    fontWeight: 800
+    lineHeight: 0.95
+    letterSpacing: "-0.03em"
+  star-line:
+    fontFamily: "Bricolage Grotesque, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(1.5rem, 3vw, 2.25rem)"
+    fontWeight: 800
+    lineHeight: 1.08
+    letterSpacing: "-0.02em"
+  question:
+    fontFamily: "Bricolage Grotesque, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(1.25rem, 2.3vw, 1.75rem)"
+    fontWeight: 800
+    lineHeight: 1.1
+    letterSpacing: "-0.02em"
   lead:
     fontFamily: "Bricolage Grotesque, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1.25rem"
@@ -77,6 +95,16 @@ typography:
     fontSize: "16px"
     fontWeight: 400
     lineHeight: 1.55
+  essay:
+    fontFamily: "Bricolage Grotesque, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.0625rem"
+    fontWeight: 400
+    lineHeight: 1.6
+  prompt:
+    fontFamily: "Bricolage Grotesque, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.125rem"
+    fontWeight: 500
+    lineHeight: 1.4
   meta:
     fontFamily: "Bricolage Grotesque, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.875rem"
@@ -88,6 +116,11 @@ typography:
     fontSize: "0.8125rem"
     fontWeight: 700
     lineHeight: 1.5
+    letterSpacing: "0.06em"
+  dial-label:
+    fontFamily: "Bricolage Grotesque, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "15px"
+    fontWeight: 800
     letterSpacing: "0.06em"
 rounded:
   swatch: "2px"
@@ -134,6 +167,38 @@ components:
   note-swatch:
     rounded: "{rounded.swatch}"
     size: "10px"
+  whose-name:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.card}"
+    rounded: "{rounded.pill}"
+    padding: "5px 12px"
+  pill:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.pill}"
+    padding: "10px 18px"
+  pill-primary:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.card}"
+    rounded: "{rounded.pill}"
+    padding: "10px 18px"
+  pill-small:
+    rounded: "{rounded.pill}"
+    padding: "7px 14px"
+  compass-dial:
+    backgroundColor: "{colors.card}"
+    rounded: "{rounded.round}"
+    width: "min(440px, 100%, max(300px, calc(100svh - 450px)))"
+  lead-chip-work:
+    backgroundColor: "{colors.work-2}"
+    textColor: "{colors.work-9}"
+    rounded: "{rounded.pill}"
+    padding: "3px 10px"
+  lead-chip-life:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.card}"
+    rounded: "{rounded.pill}"
+    padding: "3px 10px"
 ---
 
 # Design System: Designing Your Life
@@ -155,6 +220,7 @@ Two directions were explicitly rejected by the owner and stay rejected: a form-b
 - One family, Bricolage Grotesque, carrying hierarchy through weight 800 against 400.
 - Gentle, physical motion: drop, fill, slosh, rise; still and legible with motion off.
 - Read-only for visitors; the signed-in owner edits in place on the same page.
+- One drawn instrument per exercise: the test tube for a score (chapter 1), the compass dial for a bearing (chapter 2).
 
 ## Colors
 
@@ -169,18 +235,22 @@ Step roles, as built:
 - **Step 6**: the solid swatch beside an area's note head, and the focus ring hue (Work 6).
 - **Step 2 with step 9 text**: tinted chips (the Play placeholder chip).
 - **Step 3**: text selection highlight (Play 3).
+- **Steps 5 and 7 with a step-2 tail**: a compass needle's two lit faces and its pale counterweight (the Work needle).
 
 ### Neutral
 - **Cool Pale Wall** (`wall`): the page background everywhere. Never white, so the white objects can stand on it.
 - **Bench White** (`card`): the rack's bar, posts and base, and the sticker's text. White is for objects, not for the page.
 - **Lab Ink** (`ink`): all primary text, the score numerals, and the Start-here sticker's fill.
 - **Soft Ink** (`ink-soft`): lede, colophon, and other secondary text. The owner removed the check-in date line; don't bring it back.
-- **Faint Ink** (`ink-faint`): the scrollbar thumb only; not used for text.
+- **Faint Ink** (`ink-faint`): the scrollbar thumb and disabled pill text; not used for running text.
+- **Ink tints** (Lab Ink at low alpha, not separate tokens): on the compass, the inner ring (8%), the dot marks (20%, 34% for the four cardinal dots), the gap wedge (4.5% fill under a 20% ink hatch), and the "neither leads" chip (8%). Dashed edit outlines are 28% ink, 50% on hover.
 
 ### Named Rules
 **The Four Ladders Rule.** Color on the page belongs to Health, Work, Play, or Love, drawn from that area's own ten-step ladder. There is no brand accent and no fifth hue; the wall, white, and ink are the only colorless roles.
 
 **The Step Roles Rule.** Use the ladder by role, not by taste: liquid 5 to 7, back wave 4, empty glass 14% of 4 in white, swatch 6, chip 2 with 9 text. A new surface that needs an area color reaches for one of these roles first.
+
+**The Life Is Coral Rule.** On the compass, Life borrows the Love ladder by the owner's choice (2026-10-07: "I don't want black for the life"): Love 5 and 7 for its needle faces, Love 2 for its tail, Love 6 for its swatch, handle and the selected "Life leads" choice, Love 7 for its label, and a Love 2 chip with Love 9 text. Work keeps the Work ladder, so the two needles are blue against coral. No fifth hue is added.
 
 ## Typography
 
@@ -193,10 +263,16 @@ Step roles, as built:
 - **Display** (800, clamp(2.75rem, 7vw, 5.75rem), 0.92, -0.018em, balanced wrap): the page title, top left. One per page.
 - **Headline** (800, clamp(2rem, 4.4vw, 3.75rem), 0.85, -0.04em, tabular lining figures): the score numeral under each tube. The percent sign is set small (clamp(0.875rem, 1.4vw, 1.25rem)) and top-aligned beside it.
 - **Title** (800, clamp(1rem, 1.8vw, 1.5rem), 1, -0.02em): the area name under each tube.
+- **Section** (800, clamp(2rem, 4.4vw, 3.25rem), 0.95, -0.03em): a heading that opens a second part of a page ("How they fit together"). Smaller than Display, at most one or two per page.
+- **Star line** (800, clamp(1.5rem, 3vw, 2.25rem), 1.08, -0.02em, balanced wrap, about 30ch, centered; left-aligned on phone): the person's North Star sentence on the compass page, under a 20px drawn ink star that serves as its heading. It is the one heavy sentence a person writes themselves.
+- **Question** (800, clamp(1.25rem, 2.3vw, 1.75rem), 1.1, -0.02em, balanced wrap): an exercise question set as a heading over its answer.
 - **Lead** (500, 1.25rem, 1.35, about 34ch, with 800 for named areas): the summary line that says where there is most room to grow and what is strongest. 1.125rem on phone.
 - **Body** (400, 16px, 1.55, pretty wrap): the area notes. The lede sits at 1.0625rem in Soft Ink, about 40ch.
+- **Essay** (400, 1.0625rem, 1.6, at most 62 to 68ch, 0.85em between paragraphs): long answers, such as the Workview and Lifeview essays and the compass questions' answers. Short notes stay at Body.
+- **Prompt** (500, 1.125rem, 1.4, italic, Soft Ink): the writing prompt shown in place of an empty Star line, and that field's placeholder. Empty notes and essays use their own size in italic Soft Ink.
 - **Meta** (400, 0.875rem, tabular figures, Soft Ink): colophon.
 - **Label** (700, 0.8125rem, 0.06em, uppercase): the area name heading each note, always led by its 10px area swatch. The placeholder chip and the sticker use the same uppercase voice at 0.75rem and 0.8125rem with 0.04em tracking.
+- **Dial label** (800, 15 units in the dial's 400-unit view box, 0.06em, uppercase): "Work" and "Life" at the needle tips, in Work 7 and Love 7. It scales with the dial (about 16px at full size, about 11px at its smallest), so it is set in SVG units rather than rem.
 
 ### Named Rules
 **The Weight Carries It Rule.** Hierarchy comes from weight 800 against 400 within one family. No second typeface, no serif, no italic display; italic is reserved for book titles in `cite`.
@@ -213,6 +289,8 @@ One shared measure (1040px content, plus a fluid gutter of clamp(16px, 4vw, 56px
 
 There is no primary action and no navigation on the current page.
 
+**Compass page:** the same masthead (Display title left, whose-answers row and Lead-size lede right). Below it, one centered column: the Star line, then the dial at min(440px, 100%, max(300px, 100svh - 450px)) so it fits in the first view on short laptops (min(400px, 100%) on phone). Essays sit in two equal columns (gap clamp(32px, 4vw, 64px)) from clamp(56px, 10vh, 112px) below, stacking on phone. Then the Section heading and the three questions as an FAQ accordion across the full measure, lining up with both essays: a separate white card per question (Object shadow, 8px corners, 12px apart), each (600, clamp(1.0625rem, 1.7vw, 1.25rem), lighter than headings by the owner's request) with a drawn down chevron that flips up when open, and the answer sliding open below (320ms; instant with reduced motion). All questions start closed; the owner's Edit button sits at the top right of an open answer.
+
 **The One Measure Rule.** Every block on a page uses the same measure and gutter, so all left edges line up. A new section joins the measure; it does not invent its own width.
 
 ## Elevation & Depth
@@ -222,6 +300,8 @@ Depth is soft and physical: white objects sit slightly off the wall with a diffu
 ### Shadow Vocabulary
 - **Object** (`box-shadow: 0 1px 1px rgb(27 26 34 / 0.06), 0 10px 24px -12px rgb(27 26 34 / 0.28)`): every white rack part (bar, posts, base). The default for any white object on the wall.
 - **Sticker** (`box-shadow: 0 2px 3px rgb(27 26 34 / 0.18), 0 8px 16px -6px rgb(27 26 34 / 0.35)`): the Start-here sticker, which sits a little higher than the rack.
+- **Dial** (`box-shadow: 0 1px 1px rgb(27 26 34 / 0.06), 0 18px 40px -18px rgb(27 26 34 / 0.34)`): the full-size compass, a larger white object standing further off the wall.
+- **Handle** (`filter: drop-shadow(0 2px 3px rgb(27 26 34 / 0.3))`): the round drag handles on the compass in edit mode.
 - **Contact** (radial gradient of `rgb(27 26 34 / 0.22)` to transparent, 8px tall ellipse): where a tube's round bottom touches the base.
 
 ### Named Rules
@@ -229,7 +309,7 @@ Depth is soft and physical: white objects sit slightly off the wall with a diffu
 
 ## Shapes
 
-Soft-cornered rectangles for objects, true circles for marks. Rack bar 6px, base 8px, posts 4px, note swatch 2px; chips are full pills; the sticker is a perfect circle tilted about 12 degrees (toward the page interior; -8 degrees on phone). The tube is a straight glass with a round bottom, drawn in SVG: translucent ink wall (24% ink, 3 units) and a heavier lip (4.5 units), a white shine streak, and an inside clipped to the glass.
+Soft-cornered rectangles for objects, true circles for marks. Rack bar 6px, base 8px, posts 4px, note swatch 2px; chips are full pills; the sticker is a perfect circle tilted about 12 degrees (toward the page interior; -8 degrees on phone). The tube is a straight glass with a round bottom, drawn in SVG: translucent ink wall (24% ink, 3 units) and a heavier lip (4.5 units), a white shine streak, and an inside clipped to the glass. The compass is a true white disc with a faint inner ring; its needles are long slim diamonds, split down the middle so one face catches the light, with a shorter pale tail. The North Star mark is a drawn five-pointed star, never a glyph.
 
 ## Components
 
@@ -242,6 +322,24 @@ The gauge for any 0 to 100 score. A 64 by 220 unit SVG scaled to clamp(46px, 8vw
 - **Semantics:** the glass carries `role="meter"`, 0 to 100, labelled by the area name, with value text like "58% full".
 
 **The Fullness Is the Picture Rule.** A gauge shows fullness visually: continuous fill, with no tick marks, step labels, or per-level names. The only number is the score set under the gauge.
+
+### Compass Dial (signature, chapter 2)
+The instrument for two bearings and the gap between them. A white disc (Dial shadow) drawn in a 400-unit SVG.
+- **Face:** a faint 8% ink ring, eight dot marks (the four cardinal dots larger and darker), and a drawn ink star at the top in place of N. No degrees, no tick labels, no compass letters.
+- **Needles:** two needles with short counterweight tails on one white hub with an ink center dot. Work: faces Work 5 and Work 7, tail Work 2. Life: faces Love 5 and Love 7, tail Love 2. The leading needle is drawn on top. "WORK" and "LIFE" sit just past each tip in the Dial label voice, nudged apart when the needles are close.
+- **Gap:** the wedge between the needles is a faint ink fill under a 45-degree ink hatch. No red, no warning color, no number, no "far apart" caption; the screen-reader description carries the degrees.
+- **Unset:** needles that nobody has set rest together at the star at 28% opacity, with no wedge and no labels, and a Label-voice line in Soft Ink under the dial says they aren't set yet.
+- **Motion:** on load, needles start at the star and swing out to their bearings with a damped spring (stiffness 70, damping 6.5), then the pair keeps a faint tremble (5.2s, under 1 degree). Under reduced motion they appear in place, still.
+- **Edit mode:** a round white handle (Handle shadow, 3px stroke in Work 6 or Ink, with a matching core dot) near each tip. Drag it around the dial, or focus it (`role="slider"`) and use the arrow keys (3 degrees, 15 with Shift; Home returns to the star). Cancel / Save needles sit in the sticky edit bar.
+- **Forced colors:** needles, star, hub dot and labels render in CanvasText.
+
+**The Honest Gap Rule.** The distance between two bearings is shown only as a shape: a neutral hatched wedge. It is never colored as a warning, numbered, or captioned with a verdict.
+
+### North Star line
+The person's one-sentence summary, set in the Star line voice, centered under a 24px drawn ink four-point star that serves as its heading (left-aligned on phone). Its Edit button sits to the right on the same row. When empty it shows its prompt in the Prompt voice. In edit mode the field keeps the Star line voice, centered, and Enter saves.
+
+### Lead chip
+A small uppercase pill (0.75rem, 700, 0.04em) under the "does one drive the other" question saying which leads: Work 2 with Work 9 text for Work, Love 2 with Love 9 text for Life, 8% ink for Neither. In edit mode it becomes three choice pills (white with the Object shadow; the chosen one fills Work 6, Love 6, or Ink for Neither).
 
 ### Rack
 The white stand that holds all four tubes together: a top bar across the full measure, a post at each end, and a base the tubes stand on, each a white object with the Object shadow. Tubes sit in a four-column grid and stand directly on the base with a contact shadow. Under each tube: area name (Title) and score (Headline). Areas always appear in the book's order: Health, Work, Play, Love.
@@ -257,7 +355,9 @@ Editing is inline and quiet, never a separate form screen.
 - **Text buttons:** "Edit my gauges" sits at the top right of the rack, and each note has its own "Edit" / "Write" button at the right of its heading. They are 0.8125rem, 700, Soft Ink with a small drawn pencil icon, and show a white pill on hover.
 - **Gauges in edit mode:** each tube becomes a slider. A centered round handle with up/down chevrons sits on the liquid surface; the big number becomes a typeable field with a dashed underline. A sticky bottom bar holds Cancel / Save gauges.
 - **A note in edit mode:** the same text on the same wall, marked by a 1.5px dashed outline that turns solid in the area's step-6 color on focus. Cancel / Save note pills sit underneath it. Empty notes show the area's writing prompt in italic Soft Ink.
-- **Pills:** white with the Object shadow for secondary actions, Lab Ink for primary.
+- **Pills:** white with the Object shadow for secondary actions, Lab Ink for primary (10px 18px, 0.875rem, 700; the small size is 7px 14px at 0.8125rem).
+- **Long fields:** essay editors show a quiet tabular word count in Soft Ink beside Cancel / Save.
+- **Shared:** the whose-answers row, the Edit buttons, notes edited in place, pills, the status line and the sticky edit bar are global styles in `src/app.css`, shared by every answers page. A new answers page uses them rather than restyling its own.
 
 ### Sign-in page
 Minimal by the owner's choice: one narrow column with the heading, one line that mentions the book, an email field, a full-width Lab Ink button, an invite-only note, and a "See an example" link. It has no test tubes and no cover.
@@ -281,6 +381,8 @@ On load (motion allowed), each tube drops 48px into the rack (700ms, cubic-bezie
 - **Do** mark the lowest area with the single black Start-here sticker, beside the lip, never over the glass.
 - **Do** keep editing inline on the page (drag, type, edit in place) and only for the signed-in owner; everyone else gets the same page read-only.
 - **Do** give every animated element a still, fully legible reduced-motion state.
+- **Do** draw Life on the compass from the Love ladder (coral against Work blue), by the owner's choice.
+- **Do** show two bearings and their gap with the Compass Dial: needles from the star, a neutral hatched wedge, labels at the tips.
 - **Do** keep pages other than the dashboard quiet: the test tubes belong to the dashboard and the gauge, not to the sign-in page or the book cover.
 
 ### Don't:
@@ -288,6 +390,7 @@ On load (motion allowed), each tube drops 48px into the rack (700ms, cubic-bezie
 - **Don't** build separate form screens or a form-app layout; editing happens in place.
 - **Don't** put test tubes on the book cover or the sign-in page; the owner rejected both.
 - **Don't** introduce a fifth hue or a brand accent; color belongs to the four areas.
+- **Don't** add degrees, tick labels, compass letters, red, or "far apart" captions to the compass; the gap is a shape, not a score.
 - **Don't** let any rack part, sticker, or label overlap a liquid level.
 - **Don't** return to the rejected directions: cream paper, serif editorial type, a centered card, or inline rating meters.
 - **Don't** put white surfaces on white; the wall is pale grey so white objects can stand on it.

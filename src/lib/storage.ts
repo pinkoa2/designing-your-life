@@ -1,7 +1,8 @@
-// Loading and saving dashboards, through Supabase.
+// Loading and saving answers, through Supabase.
 
 import { supabase } from "#lib/supabase.ts";
 import type { AreaId } from "#lib/content/start-where-you-are.ts";
+import type { CompassAnswers } from "#lib/content/building-a-compass.ts";
 
 export interface Answer {
   id: AreaId;
@@ -35,6 +36,35 @@ export async function saveAnswers(userId: string, answers: Answer[]): Promise<vo
       updated_at: new Date().toISOString(),
     })),
     { onConflict: "user_id,exercise,area" }
+  );
+  if (error) throw error;
+}
+
+/** One person's Building a Compass answers. Null when they haven't saved any yet. */
+export async function loadCompass(userId: string): Promise<CompassAnswers | null> {
+  if (!/^[0-9a-f-]{36}$/i.test(userId)) return null;
+  const { data, error } = await supabase.rpc("get_compass", { p_user: userId });
+  if (error) throw error;
+  return (data as CompassAnswers | null) ?? null;
+}
+
+/** Save the signed-in person's whole compass. The database only allows their own row. */
+export async function saveCompass(userId: string, c: CompassAnswers): Promise<void> {
+  const { error } = await supabase.from("compasses").upsert(
+    {
+      user_id: userId,
+      north_star: c.northStar,
+      workview: c.workview,
+      lifeview: c.lifeview,
+      complement: c.complement,
+      clash: c.clash,
+      drives: c.drives,
+      lead: c.lead,
+      work_angle: c.work,
+      life_angle: c.life,
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: "user_id" }
   );
   if (error) throw error;
 }

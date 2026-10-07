@@ -10,7 +10,7 @@ export interface Exercise {
 
 export const exercises: Exercise[] = [
   { chapter: 1, title: "Start Where You Are", exercise: "Health / Work / Play / Love Dashboard", href: "/start-where-you-are/" },
-  { chapter: 2, title: "Building a Compass", exercise: "Workview & Lifeview" },
+  { chapter: 2, title: "Building a Compass", exercise: "Workview & Lifeview", href: "/building-a-compass/" },
   { chapter: 3, title: "Wayfinding", exercise: "Good Time Journal" },
   { chapter: 4, title: "Getting Unstuck", exercise: "Mind Mapping" },
   { chapter: 5, title: "Design Your Lives", exercise: "Odyssey Plans" },

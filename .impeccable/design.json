@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-04T15:44:57Z",
+  "generatedAt": "2026-10-07T00:00:00Z",
   "title": "Design System: Designing Your Life",
   "extensions": {
     "colorMeta": {
@@ -783,6 +783,18 @@
         "displayName": "Title",
         "purpose": "Area name under each gauge."
       },
+      "section": {
+        "displayName": "Section",
+        "purpose": "Heading that opens a second part of a page, such as \"How they fit together\"."
+      },
+      "star-line": {
+        "displayName": "Star line",
+        "purpose": "The North Star sentence on the compass page, centered under a 20px drawn star (left on phone)."
+      },
+      "question": {
+        "displayName": "Question",
+        "purpose": "An exercise question set as a heading over its answer."
+      },
       "lead": {
         "displayName": "Lead",
         "purpose": "Summary line naming most room to grow and strongest; areas in 800."
@@ -791,6 +803,14 @@
         "displayName": "Body",
         "purpose": "Area notes and running prose."
       },
+      "essay": {
+        "displayName": "Essay",
+        "purpose": "Long answers: Workview, Lifeview, and the compass question answers."
+      },
+      "prompt": {
+        "displayName": "Prompt",
+        "purpose": "Italic Soft Ink writing prompt in place of an empty Star line."
+      },
       "meta": {
         "displayName": "Meta",
         "purpose": "Colophon, in Soft Ink."
@@ -798,6 +818,10 @@
       "label": {
         "displayName": "Label",
         "purpose": "Uppercase area name heading each note, led by its area swatch."
+      },
+      "dial-label": {
+        "displayName": "Dial label",
+        "purpose": "WORK and LIFE at the needle tips, in SVG units so it scales with the dial."
       }
     },
     "shadows": [
@@ -810,6 +834,16 @@
         "name": "sticker",
         "value": "0 2px 3px rgb(27 26 34 / 0.18), 0 8px 16px -6px rgb(27 26 34 / 0.35)",
         "purpose": "The Start-here sticker, lifted slightly above the rack."
+      },
+      {
+        "name": "dial",
+        "value": "0 1px 1px rgb(27 26 34 / 0.06), 0 18px 40px -18px rgb(27 26 34 / 0.34)",
+        "purpose": "The full-size Compass Dial, standing further off the wall than the rack."
+      },
+      {
+        "name": "handle",
+        "value": "drop-shadow(0 2px 3px rgb(27 26 34 / 0.3))",
+        "purpose": "Filter on the compass drag handles in edit mode."
       },
       {
         "name": "contact",
@@ -825,8 +859,8 @@
       },
       {
         "name": "liquid-fill",
-        "value": "1600ms cubic-bezier(0.25, 1, 0.5, 1), from empty, 800ms + 140ms stagger",
-        "purpose": "Liquid rises from empty to its score after the drop."
+        "value": "1400ms cubic-bezier(0.25, 1, 0.5, 1) transition, 120ms stagger, once answers load",
+        "purpose": "Liquid eases up from empty to its score after the answers arrive; follows the pointer with no easing while dragging."
       },
       {
         "name": "slosh",
@@ -839,9 +873,19 @@
         "purpose": "Slow white bubbles rising through liquid deeper than 24 units."
       },
       {
+        "name": "needle-swing",
+        "value": "damped spring, stiffness 70, damping 6.5, from the North Star",
+        "purpose": "Compass needles swing out from the star to their bearings on load."
+      },
+      {
+        "name": "needle-tremble",
+        "value": "5.2s ease-in-out infinite, rotate +0.7 / -0.45 / +0.3deg",
+        "purpose": "Faint constant tremble of the settled needle pair."
+      },
+      {
         "name": "reduced-motion",
         "value": "prefers-reduced-motion: reduce",
-        "purpose": "No drop, fill, slosh or bubbles; still surface with a slight concave meniscus."
+        "purpose": "No drop, fill, slosh or bubbles; still surface with a slight concave meniscus. Compass needles appear in place, with no swing or tremble."
       }
     ],
     "breakpoints": [
@@ -908,9 +952,49 @@
       "name": "Masthead",
       "kind": "custom",
       "refersTo": "display",
-      "description": "Heavy display title with the lede, summary line, and check-in meta beside it on the shared measure.",
+      "description": "Heavy display title on the left; whose-answers row, lede and summary line beside it on the shared measure.",
       "html": "<header class=\"ds-mast\"><h1 class=\"ds-title\">Start Where You&nbsp;Are</h1><div><p class=\"ds-lede\">A check-in on Health, Work, Play and Love, from <cite>Designing Your Life</cite>.</p><p class=\"ds-summary\">Most room to grow: <strong>Play</strong>, at 27%.</p></div></header>",
       "css": ".ds-mast { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px 40px; align-items: end; color: #1b1a22; font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; } .ds-title { margin: 0; font-size: 3.5rem; font-weight: 800; line-height: 0.92; letter-spacing: -0.018em; } .ds-lede { margin: 0 0 14px; font-size: 1.0625rem; color: #4a4955; } .ds-summary { margin: 0; font-size: 1.25rem; line-height: 1.35; font-weight: 500; } .ds-summary strong { font-weight: 800; } .ds-mast a:focus-visible, .ds-mast :focus-visible { outline: 2px solid #2f66f2; outline-offset: 3px; border-radius: 4px; }"
+    },
+    {
+      "name": "Compass Dial",
+      "kind": "custom",
+      "refersTo": "compass-dial",
+      "description": "White disc with eight dot marks and a drawn four-point diamond star at N; Work needle Work 5/7 with a Work 2 tail, Life needle Love 5/7 with a Love 2 tail; the gap is a faint hatched ink wedge. No degrees, ticks, red or captions.",
+      "html": "<div class=\"ds-compass\"><svg viewBox=\"-200 -200 400 400\" role=\"img\" aria-label=\"Compass: Work points 60 degrees left of the North Star, Life points 70 degrees right of the North Star.\"><defs><pattern id=\"ds-hatch\" width=\"7\" height=\"7\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"7\" stroke=\"rgb(27 26 34 / 0.2)\" stroke-width=\"1.4\"/></pattern></defs><circle r=\"170\" fill=\"none\" stroke=\"rgb(27 26 34 / 0.08)\" stroke-width=\"1.5\"/><circle cx=\"128.7\" cy=\"-128.7\" r=\"1.8\" class=\"ds-m\"/><circle cx=\"182\" cy=\"0\" r=\"3.4\" class=\"ds-mb\"/><circle cx=\"128.7\" cy=\"128.7\" r=\"1.8\" class=\"ds-m\"/><circle cx=\"0\" cy=\"182\" r=\"3.4\" class=\"ds-mb\"/><circle cx=\"-128.7\" cy=\"128.7\" r=\"1.8\" class=\"ds-m\"/><circle cx=\"-182\" cy=\"0\" r=\"3.4\" class=\"ds-mb\"/><circle cx=\"-128.7\" cy=\"-128.7\" r=\"1.8\" class=\"ds-m\"/><path d=\"M0,-195L2.97,-186.09L12.36,-186.02L4.81,-180.44L7.64,-171.48L0,-176.94L-7.64,-171.48L-4.81,-180.44L-12.36,-186.02L-2.97,-186.09Z\" fill=\"#1b1a22\"/><path d=\"M0,0 L-114.32,-66 A132,132 0 0 1 124.04,-45.15 Z\" fill=\"rgb(27 26 34 / 0.045)\"/><path d=\"M0,0 L-114.32,-66 A132,132 0 0 1 124.04,-45.15 Z\" fill=\"url(#ds-hatch)\"/><g transform=\"rotate(-60)\"><path d=\"M-9,0 L0,93 L9,0 Z\" fill=\"#cadbfd\"/><path d=\"M0,-150 L-9,0 L0,0 Z\" fill=\"#6997fe\"/><path d=\"M0,-150 L9,0 L0,0 Z\" fill=\"#2855cb\"/></g><g transform=\"rotate(70)\"><path d=\"M-9,0 L0,93 L9,0 Z\" fill=\"rgb(27 26 34 / 0.16)\"/><path d=\"M0,-150 L-9,0 L0,0 Z\" fill=\"#4a4955\"/><path d=\"M0,-150 L9,0 L0,0 Z\" fill=\"#1b1a22\"/></g><circle r=\"12\" fill=\"#fff\" stroke=\"rgb(27 26 34 / 0.22)\" stroke-width=\"1.5\"/><circle r=\"4\" fill=\"#1b1a22\"/><text x=\"-149\" y=\"-86\" class=\"ds-lbl\" fill=\"#2855cb\">Work</text><text x=\"161.6\" y=\"-58.8\" class=\"ds-lbl\" fill=\"#1b1a22\">Life</text></svg></div>",
+      "css": ".ds-compass { width: 320px; aspect-ratio: 1; border-radius: 50%; background: #ffffff; box-shadow: 0 1px 1px rgb(27 26 34 / 0.06), 0 18px 40px -18px rgb(27 26 34 / 0.34); } .ds-compass svg { display: block; width: 100%; height: 100%; overflow: visible; } .ds-m { fill: rgb(27 26 34 / 0.2); } .ds-mb { fill: rgb(27 26 34 / 0.34); } .ds-lbl { font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; font-size: 15px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; text-anchor: middle; dominant-baseline: central; }"
+    },
+    {
+      "name": "North Star Line",
+      "kind": "custom",
+      "refersTo": "star-line",
+      "description": "The person's one-sentence North Star, heavy and centered under a 20px drawn star.",
+      "html": "<div class=\"ds-ns\"><svg viewBox=\"-14 -14 28 28\" aria-hidden=\"true\"><path d=\"M0,-13L2.97,-4.09L12.36,-4.02L4.81,1.56L7.64,10.52L0,5.06L-7.64,10.52L-4.81,1.56L-12.36,-4.02L-2.97,-4.09Z\"/></svg><p>Do useful work with people I like, and keep evenings for the people I love.</p></div>",
+      "css": ".ds-ns { max-width: 30ch; text-align: center; color: #1b1a22; font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; } .ds-ns svg { width: 20px; height: 20px; fill: #1b1a22; } .ds-ns p { margin: 8px 0 0; font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; }"
+    },
+    {
+      "name": "Lead Chip",
+      "kind": "chip",
+      "refersTo": "lead-chip-work",
+      "description": "Which one leads: Work 2 with Work 9 text, Ink with white for Life, 8% ink for Neither.",
+      "html": "<span class=\"ds-lead ds-work\">Work leads</span> <span class=\"ds-lead ds-life\">Life leads</span> <span class=\"ds-lead ds-neither\">Neither</span>",
+      "css": ".ds-lead { display: inline-block; padding: 3px 10px; border-radius: 999px; font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; } .ds-work { background: #cadbfd; color: #1c3a85; } .ds-life { background: #1b1a22; color: #ffffff; } .ds-neither { background: rgb(27 26 34 / 0.08); color: #1b1a22; }"
+    },
+    {
+      "name": "Pill Buttons",
+      "kind": "button",
+      "refersTo": "pill",
+      "description": "White pill with the Object shadow for secondary actions, Lab Ink for primary. Shared from app.css.",
+      "html": "<button class=\"ds-pill\">Cancel</button> <button class=\"ds-pill ds-primary\">Save needles</button>",
+      "css": ".ds-pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border: 0; border-radius: 999px; background: #ffffff; color: #1b1a22; box-shadow: 0 1px 1px rgb(27 26 34 / 0.06), 0 10px 24px -12px rgb(27 26 34 / 0.28); font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 700; cursor: pointer; } .ds-pill:hover { background: #e9ecee; } .ds-pill.ds-primary { background: #1b1a22; color: #ffffff; } .ds-pill.ds-primary:hover { background: #33313d; } .ds-pill:focus-visible { outline: 2px solid #2f66f2; outline-offset: 3px; }"
+    },
+    {
+      "name": "Whose-answers Row",
+      "kind": "nav",
+      "refersTo": "whose-name",
+      "description": "Lab Ink pill naming whose answers these are, with a quiet Copy share link button or a VIEW ONLY label. Shared from app.css.",
+      "html": "<div class=\"ds-whose\"><span class=\"ds-whose-name\">Alex's compass</span><span class=\"ds-whose-mode\">View only</span></div>",
+      "css": ".ds-whose { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; } .ds-whose-name { padding: 5px 12px; border-radius: 999px; background: #1b1a22; color: #ffffff; font-size: 0.8125rem; font-weight: 700; } .ds-whose-mode { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4a4955; }"
     }
   ],
   "narrative": {
@@ -922,7 +1006,8 @@
       "Gauges are liquid in glass: continuous fill, no ticks, no step names.",
       "One family, Bricolage Grotesque, carrying hierarchy through weight 800 against 400.",
       "Gentle, physical motion: drop, fill, slosh, rise; still and legible with motion off.",
-      "Display only."
+      "Read-only for visitors; the signed-in owner edits in place on the same page.",
+      "One drawn instrument per exercise: the test tube for a score (chapter 1), the compass dial for a bearing (chapter 2)."
     ],
     "rules": [
       {
@@ -933,6 +1018,11 @@
       {
         "name": "The Step Roles Rule",
         "body": "Use the ladder by role, not by taste: liquid 5 to 7, back wave 4, empty glass 14% of 4 in white, swatch 6, chip 2 with 9 text. A new surface that needs an area color reaches for one of these roles first.",
+        "section": "colors"
+      },
+      {
+        "name": "The Life Is Coral Rule",
+        "body": "On the compass, Life borrows the Love ladder by the owner's choice (2026-10-07): Love 5 and 7 for its needle faces, Love 2 for its tail, Love 6 for its swatch, handle and selected choice, Love 7 for its label, and a Love 2 chip with Love 9 text. Work keeps the Work ladder. No fifth hue is added.",
         "section": "colors"
       },
       {
@@ -959,6 +1049,11 @@
         "name": "The Fullness Is the Picture Rule",
         "body": "A gauge shows fullness visually: continuous fill, with no tick marks, step labels, or per-level names. The only number is the score set under the gauge.",
         "section": "components"
+      },
+      {
+        "name": "The Honest Gap Rule",
+        "body": "The distance between two bearings is shown only as a shape: a neutral hatched wedge. It is never colored as a warning, numbered, or captioned with a verdict.",
+        "section": "components"
       }
     ],
     "dos": [
@@ -967,14 +1062,18 @@
       "Do keep the four area hues and their ten-step ladders exactly as defined, and use them by step role: liquid 5 to 7, back wave 4, empty wash 14% of 4, swatch 6, chip 2 with 9 text.",
       "Do keep the rack's bar, posts and base behind the tubes so a level is never covered.",
       "Do mark the lowest area with the single black Start-here sticker, beside the lip, never over the glass.",
-      "Do render pages as display only, prerendered, with content in `src/lib/content/*.ts` files that Claude edits from chat; a content change is an edit to data, never to layout.",
+      "Do keep editing inline on the page (drag, type, edit in place) and only for the signed-in owner; everyone else gets the same page read-only.",
       "Do give every animated element a still, fully legible reduced-motion state.",
-      "Do flag placeholder content on screen until the owner's real answers replace it."
+      "Do draw any subject outside the four areas (Life on the compass) in Lab Ink.",
+      "Do show two bearings and their gap with the Compass Dial: needles from the star, a neutral hatched wedge, labels at the tips.",
+      "Do keep pages other than the dashboard quiet: the test tubes belong to the dashboard and the gauge, not to the sign-in page or the book cover."
     ],
     "donts": [
       "Don't add tick marks, step labels, or per-level names (\"low\", \"thriving\", and so on) to a gauge.",
-      "Don't add forms, inputs, textareas, edit buttons, save states, or any \"fill this in\" UI.",
+      "Don't build separate form screens or a form-app layout; editing happens in place.",
+      "Don't put test tubes on the book cover or the sign-in page; the owner rejected both.",
       "Don't introduce a fifth hue or a brand accent; color belongs to the four areas.",
+      "Don't add degrees, tick labels, compass letters, red, or \"far apart\" captions to the compass; the gap is a shape, not a score.",
       "Don't let any rack part, sticker, or label overlap a liquid level.",
       "Don't return to the rejected directions: cream paper, serif editorial type, a centered card, or inline rating meters.",
       "Don't put white surfaces on white; the wall is pale grey so white objects can stand on it."
